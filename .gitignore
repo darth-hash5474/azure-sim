@@ -1,0 +1,21 @@
+# Dependencies and build output (every app folder)
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Retired games and old drafts
+_archive/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local env and editor files
+*.local
+.env*
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.sw?
