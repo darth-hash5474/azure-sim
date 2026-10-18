@@ -1,9 +1,8 @@
 // Game engine for No Route: a simulated slice of Azure virtual networking and Network Watcher. No React in here.
 
 import { isFileRef, readScratchJson, scratchCommand, type ScratchConfig } from './scratch';
-import { newShell, promptFor, runShell, type Host, type ShellEnv } from './shell';
+import { newShell, runShell, type Host, type ShellEnv } from './shell';
 import { splitWords } from './shellcore';
-import { CMDLETS } from './cmdlets';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 
@@ -44,7 +43,7 @@ export interface Game {
   solved: boolean;
   files: Record<string, string>; // ~/scratch: ticket.txt, rule.json, peering.json and whatever the player adds
   focus: string | null; // file the editor panel shows
-  sh: ShellEnv; // which shell is open (bash or PowerShell) and its variables
+  sh: ShellEnv; // bash variables
   history: Line[];
 }
 
@@ -691,13 +690,13 @@ function restCmd(g: Game, out: Out, cmd: string) {
 }
 
 /** What the shell layer needs from this lab. */
-export const HOST: Host<Game> = { execute, prompt: () => PROMPT, cfg: SCRATCH, cmdlets: CMDLETS };
+export const HOST: Host<Game> = { execute, prompt: () => PROMPT, cfg: SCRATCH };
 
-/** Runs whatever was typed (one line or several, bash or PowerShell) and returns the new game. */
+/** Runs whatever was typed (one line or several) and returns the new game. */
 export const runCommand = (prev: Game, text: string): Game => runShell(prev, text, HOST);
 
-/** The prompt of the shell that is open: user@host:~$ in bash, PS /home/user> in PowerShell. */
-export const livePrompt = (g: Game): string => promptFor(HOST.prompt(g), g.sh.mode);
+/** The bash prompt, e.g. user@host:~$. */
+export const livePrompt = (g: Game): string => HOST.prompt(g);
 
 function execute(prev: Game, cmd: string, _echo: string | null): Game {
   if (cmd === 'clear') return { ...prev, history: [] };

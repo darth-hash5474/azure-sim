@@ -14,8 +14,7 @@ import {
   type LineType,
   type LockLevel,
 } from './engine';
-import TerminalInput, { ShellTabs } from './TerminalInput';
-import { setMode, type Mode } from './shell';
+import TerminalInput from './TerminalInput';
 import { setFile } from './scratch';
 
 const LINE_STYLES: Record<LineType, string> = {
@@ -35,12 +34,11 @@ const LOCK_BADGE: Record<LockLevel | 'none', { text: string; cls: string }> = {
 
 type Action =
   | { type: 'command'; text: string }
-  | { type: 'shell'; mode: Mode }
   | { type: 'write'; name: string; text: string }
   | { type: 'focus'; name: string };
 
 const reducer = (g: Game, a: Action): Game =>
-  a.type === 'command' ? runCommand(g, a.text) : a.type === 'shell' ? setMode(g, a.mode) : a.type === 'write' ? setFile(g, a.name, a.text, SCRATCH) : a.name in g.files ? { ...g, focus: a.name } : g;
+  a.type === 'command' ? runCommand(g, a.text) : a.type === 'write' ? setFile(g, a.name, a.text, SCRATCH) : a.name in g.files ? { ...g, focus: a.name } : g;
 
 export default function ManageResources(): React.JSX.Element {
   const [game, dispatch] = useReducer(reducer, undefined, initialGame);
@@ -103,7 +101,7 @@ export default function ManageResources(): React.JSX.Element {
           onClick={() => inputRef.current?.focus()}
         >
           <div className="h-9 px-3 flex items-center border-b border-line text-[11px]">
-            <ShellTabs mode={game.sh.mode} onMode={(mode) => dispatch({ type: 'shell', mode })} />
+            <span className="text-fg">az cli</span>
             <span className="ml-3 text-dim">tags · moves · resource groups</span>
             <span className="ml-auto text-dim">↑↓ history · Shift+Enter new line</span>
           </div>
@@ -117,7 +115,7 @@ export default function ManageResources(): React.JSX.Element {
             <div ref={terminalEndRef} />
           </div>
 
-          <TerminalInput prompt={livePrompt(game)} mode={game.sh.mode} inputRef={inputRef} onSubmit={(text) => dispatch({ type: 'command', text })} />
+          <TerminalInput prompt={livePrompt(game)} inputRef={inputRef} onSubmit={(text) => dispatch({ type: 'command', text })} />
         </section>
 
         <section className="bg-panel border border-line">

@@ -20,8 +20,7 @@ import {
   type Game,
   type LineType,
 } from './engine';
-import TerminalInput, { ShellTabs } from './TerminalInput';
-import { setMode, type Mode } from './shell';
+import TerminalInput from './TerminalInput';
 
 const LINE_STYLES: Record<LineType, string> = {
   input: 'text-fg',
@@ -32,10 +31,10 @@ const LINE_STYLES: Record<LineType, string> = {
   alert: 'text-warn',
 };
 
-type Action = { type: 'command'; text: string } | { type: 'shell'; mode: Mode } | ScratchAction;
+type Action = { type: 'command'; text: string } | ScratchAction;
 
 const reducer = (g: Game, a: Action): Game =>
-  a.type === 'command' ? runCommand(g, a.text) : a.type === 'shell' ? setMode(g, a.mode) : applyScratch(g, a, SCRATCH);
+  a.type === 'command' ? runCommand(g, a.text) : applyScratch(g, a, SCRATCH);
 
 export default function SlotSwap(): React.JSX.Element {
   const [game, dispatch] = useReducer(reducer, undefined, initialGame);
@@ -80,7 +79,7 @@ export default function SlotSwap(): React.JSX.Element {
           onClick={() => inputRef.current?.focus()}
         >
           <div className="h-9 px-3 flex items-center border-b border-line text-[11px]">
-            <ShellTabs mode={game.sh.mode} onMode={(mode) => dispatch({ type: 'shell', mode })} />
+            <span className="text-fg">az cli</span>
             <span className="ml-3 text-dim">bicep · app service slots · vm sizes</span>
             <span className="ml-auto text-dim">↑↓ history · Shift+Enter new line</span>
           </div>
@@ -94,7 +93,7 @@ export default function SlotSwap(): React.JSX.Element {
             <div ref={terminalEndRef} />
           </div>
 
-          <TerminalInput prompt={livePrompt(game)} mode={game.sh.mode} inputRef={inputRef} onSubmit={(text) => dispatch({ type: 'command', text })} />
+          <TerminalInput prompt={livePrompt(game)} inputRef={inputRef} onSubmit={(text) => dispatch({ type: 'command', text })} />
         </section>
 
         <ScratchPanel

@@ -1,30 +1,25 @@
-// The simulated shell: bash parsing and execution, the PowerShell switch, and the entry point the labs call.
+// The simulated shell: bash parsing and execution, and the entry point the labs call.
 // Pure TypeScript, no React.
 import { fileName, scratchCommand, type ScratchLine } from './scratch';
-import { pwshIncomplete, runPwshText } from './pwsh';
 import {
-  MODE_BANNER,
   SHELL_HELP,
   asLines,
-  cmdletList,
   err1,
   out1,
   emit,
   hasError,
   lineCountOf,
   newShell,
-  promptFor,
   runEngine,
   writeFileChecked,
   type Ctx,
   type Host,
-  type Mode,
   type Ran,
   type ShellState,
 } from './shellcore';
 
-export { newShell, promptFor };
-export type { Host, Mode, ShellEnv, ShellState, CmdletDef, CmdletTable, Bound, Build } from './shellcore';
+export { newShell };
+export type { Host, ShellEnv, ShellState } from './shellcore';
 
 // ---- phase A: split the typed text into statements (quotes, $( ), continuations, heredocs) ----
 
@@ -214,8 +209,8 @@ export function splitBash(src: string): { stmts: (RawStmt & { sep: ';' | '&&' | 
 }
 
 /** True while the typed text is not a finished command yet (open quote, trailing \ or |, unfinished heredoc...). */
-export function needsMore(text: string, mode: Mode): boolean {
-  return mode === 'bash' ? splitBash(text).incomplete : pwshIncomplete(text);
+export function needsMore(text: string): boolean {
+  return splitBash(text).incomplete;
 }
 
 // ---- phase B: expand one statement into pipeline stages ----
@@ -587,30 +582,9 @@ function runCmd<G extends ShellState>(ctx: Ctx<G>, argv: string[], stdin: string
     case 'help':
       if (!args.length) return mk(bashHelp(ctx));
       break;
-    case 'cmdlets':
-      return mk(cmdletList(ctx));
     case 'pwsh':
-    case 'powershell': {
-      const ci = args.findIndex((a) => /^-(c|command)$/i.test(a));
-      const fi = args.findIndex((a) => /^-file$/i.test(a));
-      if (ci >= 0 || fi >= 0) {
-        let script = args.slice(ci + 1).join(' ');
-        if (fi >= 0) {
-          const f = fileName(args[fi + 1] ?? '');
-          if (!(f in g.files)) return mk([err1(`The argument '${args[fi + 1] ?? ''}' to the -File parameter does not exist. Provide the path to an existing '.ps1' file as an argument to the -File parameter.`)]);
-          script = g.files[f];
-        }
-        const lines: ScratchLine[] = [];
-        if (ctx.depth < 6) {
-          ctx.depth++;
-          runPwshText(ctx, script, lines);
-          ctx.depth--;
-        }
-        return { lines, ok: !hasError(lines) };
-      }
-      g.sh.mode = 'pwsh';
-      return mk(MODE_BANNER.pwsh);
-    }
+    case 'powershell':
+      return mk([err1(`bash: ${name}: not available in this lab. Use the az CLI.`)]);
     case 'bash':
     case 'sh':
     case 'source':
@@ -686,7 +660,6 @@ function runStatement<G extends ShellState>(ctx: Ctx<G>, s: RawStmt, capture: Sc
       continue;
     }
     if (st.stdin !== undefined) stdin = st.stdin;
-    const modeBefore = ctx.g.sh.mode;
     const ran: Ran = runCmd(ctx, st.argv, stdin);
     ok = ran.ok;
     if (k < stages.length - 1) {
@@ -696,7 +669,6 @@ function runStatement<G extends ShellState>(ctx: Ctx<G>, s: RawStmt, capture: Sc
       deliver(ctx, st, ran, capture);
       stdin = null;
     }
-    if (ctx.g.sh.mode !== modeBefore) break;
   }
   ctx.g.sh.bash['?'] = ok ? '0' : '1';
   return ok;
@@ -705,7 +677,6 @@ function runStatement<G extends ShellState>(ctx: Ctx<G>, s: RawStmt, capture: Sc
 /** Runs bash text. With `capture`, normal output is collected there instead of printed (command substitution, scripts). */
 export function runBashText<G extends ShellState>(ctx: Ctx<G>, src: string, capture: ScratchLine[] | null): void {
   const { stmts } = splitBash(src);
-  const mode = ctx.g.sh.mode;
   let ok = true;
   let prevSep: ';' | '&&' | '||' = ';';
   for (const s of stmts) {
@@ -713,13 +684,12 @@ export function runBashText<G extends ShellState>(ctx: Ctx<G>, src: string, capt
     prevSep = s.sep;
     if (skip) continue;
     ok = runStatement(ctx, s, capture);
-    if (ctx.g.sh.mode !== mode) return;
   }
 }
 
 // ---- entry points ----
 
-/** Runs whatever was typed (one line or several) in the current shell and returns the new game state. */
+/** Runs whatever was typed (one line or several) and returns the new game state. */
 export function runShell<G extends ShellState>(prev: G, text: string, host: Host<G>): G {
   const src = text.replace(/\s+$/, '');
   if (!src.trim()) return prev;
@@ -727,19 +697,11 @@ export function runShell<G extends ShellState>(prev: G, text: string, host: Host
     ...prev,
     files: { ...prev.files },
     history: [...prev.history],
-    sh: { mode: prev.sh.mode, bash: { ...prev.sh.bash }, pwsh: { ...prev.sh.pwsh } },
+    sh: { bash: { ...prev.sh.bash } },
   };
-  const mode = g.sh.mode;
   const base = host.prompt(g);
-  src.split('\n').forEach((l, i) => g.history.push({ text: `${i === 0 ? promptFor(base, mode) : mode === 'bash' ? '>' : '>>'} ${l}`, type: 'input' }));
+  src.split('\n').forEach((l, i) => g.history.push({ text: `${i === 0 ? base : '>'} ${l}`, type: 'input' }));
   const ctx: Ctx<G> = { g, host, depth: 0, inline: 0 };
-  if (mode === 'bash') runBashText(ctx, src, null);
-  else runPwshText(ctx, src, null);
+  runBashText(ctx, src, null);
   return ctx.g;
-}
-
-/** Switches shell from the UI tabs. */
-export function setMode<G extends ShellState>(prev: G, mode: Mode): G {
-  if (prev.sh.mode === mode) return prev;
-  return { ...prev, sh: { ...prev.sh, mode }, history: [...prev.history, ...MODE_BANNER[mode]] };
 }

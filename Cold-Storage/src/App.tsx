@@ -15,8 +15,7 @@ import {
 } from './engine';
 import ScratchPanel from './ScratchPanel';
 import { SCRATCH } from './engine';
-import TerminalInput, { ShellTabs } from './TerminalInput';
-import { setMode, type Mode } from './shell';
+import TerminalInput from './TerminalInput';
 import { applyScratch, type ScratchAction } from './scratch';
 
 const LINE_STYLES: Record<LineType, string> = {
@@ -27,10 +26,10 @@ const LINE_STYLES: Record<LineType, string> = {
   success: 'text-ok',
   alert: 'text-warn',
 };
-type Action = string | { type: 'shell'; mode: Mode } | ScratchAction;
+type Action = string | ScratchAction;
 
 const reducer = (g: Game, a: Action): Game =>
-  typeof a === 'string' ? runCommand(g, a) : a.type === 'shell' ? setMode(g, a.mode) : applyScratch(g, a, SCRATCH);
+  typeof a === 'string' ? runCommand(g, a) : applyScratch(g, a, SCRATCH);
 
 export default function ColdStorage(): React.JSX.Element {
   const [game, dispatch] = useReducer(reducer, undefined, initialGame);
@@ -82,7 +81,7 @@ export default function ColdStorage(): React.JSX.Element {
           onClick={() => inputRef.current?.focus()}
         >
           <div className="h-9 px-3 flex items-center border-b border-line text-[11px]">
-            <ShellTabs mode={game.sh.mode} onMode={(mode) => dispatch({ type: 'shell', mode })} />
+            <span className="text-fg">az cli</span>
             <span className="ml-3 text-dim">azure storage</span>
             <span className="ml-auto text-dim">↑↓ history · Shift+Enter new line</span>
           </div>
@@ -96,7 +95,7 @@ export default function ColdStorage(): React.JSX.Element {
             <div ref={terminalEndRef} />
           </div>
 
-          <TerminalInput prompt={livePrompt(game)} mode={game.sh.mode} inputRef={inputRef} onSubmit={(text) => dispatch(text)} />
+          <TerminalInput prompt={livePrompt(game)} inputRef={inputRef} onSubmit={(text) => dispatch(text)} />
         </section>
 
         <ScratchPanel

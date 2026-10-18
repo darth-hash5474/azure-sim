@@ -1,9 +1,8 @@
 // Game engine for Cold Storage: a simulated slice of Azure Storage management and the Azure CLI. No React in here.
 
 import { isFileRef, readScratchJson, scratchCommand, type ScratchConfig } from './scratch';
-import { newShell, promptFor, runShell, type Host, type ShellEnv } from './shell';
+import { newShell, runShell, type Host, type ShellEnv } from './shell';
 import { splitWords } from './shellcore';
-import { CMDLETS } from './cmdlets';
 
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
@@ -85,7 +84,7 @@ export interface Game {
   lifecycleDoc: unknown | null; // the policy as it was when applied (editing the file afterwards changes nothing until re-applied)
   files: Record<string, string>; // ~/scratch: the lifecycle policy drafts and whatever the player adds
   focus: string | null; // file the editor panel shows
-  sh: ShellEnv; // which shell is open (bash or PowerShell) and its variables
+  sh: ShellEnv; // bash variables
   defaultAction: 'Allow' | 'Deny';
   ipRules: string[];
   subnetRule: boolean;
@@ -698,13 +697,13 @@ const HELP_COMMANDS: [string, string][] = [
 // ---- commands ----
 
 /** What the shell layer needs from this lab. */
-export const HOST: Host<Game> = { execute, prompt: () => PROMPT, cfg: SCRATCH, cmdlets: CMDLETS };
+export const HOST: Host<Game> = { execute, prompt: () => PROMPT, cfg: SCRATCH };
 
-/** Runs whatever was typed (one line or several, bash or PowerShell) and returns the new game. */
+/** Runs whatever was typed (one line or several) and returns the new game. */
 export const runCommand = (prev: Game, text: string): Game => runShell(prev, text, HOST);
 
-/** The prompt of the shell that is open: user@host:~$ in bash, PS /home/user> in PowerShell. */
-export const livePrompt = (g: Game): string => promptFor(HOST.prompt(g), g.sh.mode);
+/** The bash prompt, e.g. user@host:~$. */
+export const livePrompt = (g: Game): string => HOST.prompt(g);
 
 function execute(prev: Game, raw: string, _echo: string | null): Game {
   // the drafts used to live in a policies/ folder: keep that spelling working

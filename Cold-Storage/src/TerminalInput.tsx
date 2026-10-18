@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { needsMore, type Mode } from './shell';
+import { needsMore } from './shell';
 
-/** The multi-line prompt: Enter runs a finished command, keeps typing while a quote, \ or ` is still open. */
+/** The multi-line prompt: Enter runs a finished command, keeps typing while a quote or \ is still open. */
 export default function TerminalInput({
   prompt,
-  mode,
   onSubmit,
   inputRef,
 }: {
   prompt: string;
-  mode: Mode;
   onSubmit: (text: string) => void;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }): React.JSX.Element {
@@ -30,7 +28,7 @@ export default function TerminalInput({
     if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       if (!text.trim()) {
         e.preventDefault();
-      } else if (e.ctrlKey || e.metaKey || !needsMore(text, mode)) {
+      } else if (e.ctrlKey || e.metaKey || !needsMore(text)) {
         e.preventDefault();
         submit();
       }
@@ -60,7 +58,7 @@ export default function TerminalInput({
   return (
     <div className="border-t border-line px-4 py-2.5 flex items-start gap-2">
       <span className="text-accent shrink-0 hidden sm:inline leading-relaxed">{prompt}</span>
-      <span className="text-accent shrink-0 sm:hidden leading-relaxed">{mode === 'bash' ? '$' : 'PS>'}</span>
+      <span className="text-accent shrink-0 sm:hidden leading-relaxed">$</span>
       <textarea
         ref={inputRef}
         value={text}
@@ -68,34 +66,12 @@ export default function TerminalInput({
         onChange={(e) => setText(e.target.value)}
         onKeyDown={onKeyDown}
         className="flex-1 min-w-0 bg-transparent focus:outline-none text-fg caret-accent placeholder:text-dim/50 resize-none leading-relaxed"
-        placeholder={mode === 'bash' ? 'help' : 'help · cmdlets'}
+        placeholder="help"
         spellCheck={false}
         autoComplete="off"
         autoCapitalize="off"
         autoFocus
       />
     </div>
-  );
-}
-
-/** bash | PowerShell switch for the terminal's title bar. */
-export function ShellTabs({ mode, onMode }: { mode: Mode; onMode: (m: Mode) => void }): React.JSX.Element {
-  const tab = (m: Mode, label: string) => (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.stopPropagation();
-        onMode(m);
-      }}
-      className={`px-2 py-0.5 border cursor-pointer ${mode === m ? 'border-line text-fg' : 'border-transparent text-dim hover:text-fg'}`}
-    >
-      {label}
-    </button>
-  );
-  return (
-    <span className="flex items-center gap-1">
-      {tab('bash', 'bash')}
-      {tab('pwsh', 'PowerShell')}
-    </span>
   );
 }

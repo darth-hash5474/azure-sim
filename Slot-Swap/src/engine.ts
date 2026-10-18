@@ -1,9 +1,8 @@
 // Game engine for Slot Swap: a simulated slice of ARM deployments, App Service and the Azure CLI. No React in here.
 
 import { fileName, isFileRef, readScratchJson, scratchCommand, type ScratchConfig, type ScratchOut } from './scratch';
-import { newShell, promptFor, runShell, type Host, type ShellEnv } from './shell';
+import { newShell, runShell, type Host, type ShellEnv } from './shell';
 import { splitWords } from './shellcore';
-import { CMDLETS } from './cmdlets';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 
@@ -20,7 +19,7 @@ export interface Slot {
 export interface Game {
   files: Record<string, string>; // ~/scratch: main.bicep, params.json, appsettings.json and whatever the player adds
   focus: string | null; // file the editor panel shows
-  sh: ShellEnv; // which shell is open (bash or PowerShell) and its variables
+  sh: ShellEnv; // bash variables
   plan: { sku: string; workers: number };
   prod: Slot;
   staging: Slot | null;
@@ -553,13 +552,13 @@ function resourceList(g: Game, out: Out) {
 }
 
 /** What the shell layer needs from this lab. */
-export const HOST: Host<Game> = { execute, prompt: () => PROMPT, cfg: SCRATCH, cmdlets: CMDLETS };
+export const HOST: Host<Game> = { execute, prompt: () => PROMPT, cfg: SCRATCH };
 
-/** Runs whatever was typed (one line or several, bash or PowerShell) and returns the new game. */
+/** Runs whatever was typed (one line or several) and returns the new game. */
 export const runCommand = (prev: Game, text: string): Game => runShell(prev, text, HOST);
 
-/** The prompt of the shell that is open: user@host:~$ in bash, PS /home/user> in PowerShell. */
-export const livePrompt = (g: Game): string => promptFor(HOST.prompt(g), g.sh.mode);
+/** The bash prompt, e.g. user@host:~$. */
+export const livePrompt = (g: Game): string => HOST.prompt(g);
 
 function execute(prev: Game, cmd: string, _echo: string | null): Game {
   if (cmd === 'clear') return { ...prev, history: [] };

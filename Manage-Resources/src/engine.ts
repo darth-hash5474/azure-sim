@@ -1,8 +1,7 @@
 // Game engine for Manage Resources: a simulated slice of ARM + the Azure CLI. No React in here.
 import { readScratchJson, type ScratchConfig } from './scratch';
-import { newShell, promptFor, runShell, type Host, type ShellEnv } from './shell';
+import { newShell, runShell, type Host, type ShellEnv } from './shell';
 import { splitWords } from './shellcore';
-import { CMDLETS } from './cmdlets';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 
@@ -47,7 +46,7 @@ export interface Game {
   /** File the editor panel should show (set by "edit <file>"). */
   focus: string | null;
   history: Line[];
-  /** bash / PowerShell session (variables, current mode). */
+  /** bash session (variables). */
   sh: ShellEnv;
 }
 
@@ -651,6 +650,6 @@ function execute(prev: Game, cmd: string, _echo: string | null): Game {
   return g;
 }
 
-export const HOST: Host<Game> = { execute, prompt: (g) => userPrompt(g.user), cfg: SCRATCH, cmdlets: CMDLETS };
+export const HOST: Host<Game> = { execute, prompt: (g) => userPrompt(g.user), cfg: SCRATCH };
 export const runCommand = (prev: Game, text: string): Game => runShell(prev, text, HOST);
-export const livePrompt = (g: Game): string => promptFor(HOST.prompt(g), g.sh.mode);
+export const livePrompt = (g: Game): string => HOST.prompt(g);

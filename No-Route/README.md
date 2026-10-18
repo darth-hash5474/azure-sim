@@ -37,13 +37,10 @@ npm install
 npm run dev
 ```
 
-## Shell: bash and PowerShell
+## Shell
 
-The terminal is a real-feeling shell. Switch with the **bash / PowerShell** tabs in the title bar, or type `pwsh` and `bash` (`exit` also goes back). The `az` CLI works in both; PowerShell adds Az cmdlets (`cmdlets` lists them: Get-AzRouteTable, Remove-AzRouteConfig, Set-AzNetworkSecurityRuleConfig, Add-AzVirtualNetworkPeering, Get-AzNetworkWatcherNextHop, Test-AzNetworkWatcherIPFlow).
+The terminal is a simulated bash shell around the `az` CLI.
 
-- **Multi-line:** end a line with `\` (bash) or a backtick (PowerShell), leave a quote or `@(`/`{` open, or press Shift+Enter. Pasted blocks run as typed.
+- **Multi-line:** end a line with `\`, leave a quote open, or press Shift+Enter. Pasted blocks run as typed.
 - **JSON in:** `@file.json`, an inline `'{...}'` argument, `"$(cat file.json)"`, a heredoc (`cat > f.json <<'EOF'` ... `EOF`) or `echo '{...}' > f.json`. `jq` reads values back.
-- **PowerShell JSON:** `$o = Get-Content f.json -Raw | ConvertFrom-Json`, edit `$o.a.b = 1`, then `$o | ConvertTo-Json -Depth 10 | Set-Content f.json` (watch the default depth of 2).
-- **Same job, both ways:** `az rest --method put --body @peering.json` or `Set-AzRouteTable (after Remove-AzRouteConfig), Set-AzNetworkSecurityGroup, Add-AzVirtualNetworkPeering`.
-- Scripts written in the editor run with `bash script.sh` or `./script.ps1`.
-
+- Scripts written in the editor run with `bash script.sh` or `./script.sh`.
