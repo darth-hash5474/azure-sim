@@ -1,0 +1,23 @@
+{
+  "name": "azure-sim",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "Menu",
+    "Manage-Resources",
+    "Cold-Storage",
+    "Slot-Swap",
+    "No-Route",
+    "Night-Shift"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w Menu",
+    "build": "npm run build -w Menu",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

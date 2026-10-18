@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useRef } from 'react';
-import ScratchPanel from './ScratchPanel';
+import { applyScratch, type ScratchAction } from '@azure-sim/shell';
+import { ScratchPanel, TerminalInput } from '@azure-sim/terminal-ui';
 import { SCRATCH } from './engine';
-import { applyScratch, type ScratchAction } from './scratch';
 import {
   DB_IP,
   DB_PORT,
@@ -15,7 +15,6 @@ import {
   type Game,
   type LineType,
 } from './engine';
-import TerminalInput from './TerminalInput';
 
 const LINE_STYLES: Record<LineType, string> = {
   input: 'text-fg',

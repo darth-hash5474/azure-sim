@@ -13,10 +13,9 @@ import {
   type Game,
   type LineType,
 } from './engine';
-import ScratchPanel from './ScratchPanel';
+import { applyScratch, type ScratchAction } from '@azure-sim/shell';
+import { ScratchPanel, TerminalInput } from '@azure-sim/terminal-ui';
 import { SCRATCH } from './engine';
-import TerminalInput from './TerminalInput';
-import { applyScratch, type ScratchAction } from './scratch';
 
 const LINE_STYLES: Record<LineType, string> = {
   input: 'text-fg',

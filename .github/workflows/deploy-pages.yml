@@ -27,20 +27,14 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: '*/package-lock.json'
 
-      # Each app is its own Vite project, so each needs its own install.
+      # npm workspaces: one install at the root covers every app and the shared packages.
       - name: Install dependencies
-        run: |
-          for dir in Menu Manage-Resources Cold-Storage Slot-Swap No-Route Night-Shift; do
-            echo "::group::npm ci ($dir)"
-            npm ci --prefix "$dir" --no-audit --no-fund
-            echo "::endgroup::"
-          done
+        run: npm ci --no-audit --no-fund
 
       # The menu build runs every game's build and copies them into Menu/dist/games/<id>/.
       - name: Build
-        run: npm run build --prefix Menu
+        run: npm run build
 
       - uses: actions/upload-pages-artifact@v4
         with:

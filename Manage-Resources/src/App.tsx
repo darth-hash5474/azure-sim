@@ -14,8 +14,8 @@ import {
   type LineType,
   type LockLevel,
 } from './engine';
-import TerminalInput from './TerminalInput';
-import { setFile } from './scratch';
+import { setFile } from '@azure-sim/shell';
+import { TerminalInput } from '@azure-sim/terminal-ui';
 
 const LINE_STYLES: Record<LineType, string> = {
   input: 'text-fg',

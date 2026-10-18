@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { needsMore } from './shell';
+import { needsMore } from '@azure-sim/shell';
 
 /** The multi-line prompt: Enter runs a finished command, keeps typing while a quote or \ is still open. */
 export default function TerminalInput({

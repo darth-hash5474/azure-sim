@@ -1,8 +1,6 @@
 // Game engine for No Route: a simulated slice of Azure virtual networking and Network Watcher. No React in here.
 
-import { isFileRef, readScratchJson, scratchCommand, type ScratchConfig } from './scratch';
-import { newShell, runShell, type Host, type ShellEnv } from './shell';
-import { splitWords } from './shellcore';
+import { type Host, isFileRef, newShell, readScratchJson, runShell, scratchCommand, type ScratchConfig, type ShellEnv, splitWords } from '@azure-sim/shell';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 

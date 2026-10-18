@@ -1,0 +1,20 @@
+{
+  "name": "@azure-sim/terminal-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./theme.css": "./src/theme.css"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@azure-sim/shell": "*"
+  },
+  "peerDependencies": {
+    "react": "^19.2.8"
+  }
+}

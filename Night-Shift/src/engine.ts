@@ -1,8 +1,6 @@
 // Game engine for Night Shift: a simulated slice of Azure Monitor, Log Analytics and Azure Backup. No React in here.
 
-import { isFileRef, readScratchJson, readScratchText, scratchCommand, type ScratchConfig } from './scratch';
-import { newShell, runShell, type Host, type ShellEnv } from './shell';
-import { splitWords } from './shellcore';
+import { type Host, isFileRef, newShell, readScratchJson, readScratchText, runShell, scratchCommand, type ScratchConfig, type ShellEnv, splitWords } from '@azure-sim/shell';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 

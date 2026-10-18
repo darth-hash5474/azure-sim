@@ -1,8 +1,6 @@
 // Game engine for Slot Swap: a simulated slice of ARM deployments, App Service and the Azure CLI. No React in here.
 
-import { fileName, isFileRef, readScratchJson, scratchCommand, type ScratchConfig, type ScratchOut } from './scratch';
-import { newShell, runShell, type Host, type ShellEnv } from './shell';
-import { splitWords } from './shellcore';
+import { fileName, type Host, isFileRef, newShell, readScratchJson, runShell, scratchCommand, type ScratchConfig, type ScratchOut, type ShellEnv, splitWords } from '@azure-sim/shell';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 

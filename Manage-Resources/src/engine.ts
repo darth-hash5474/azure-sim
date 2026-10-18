@@ -1,7 +1,5 @@
 // Game engine for Manage Resources: a simulated slice of ARM + the Azure CLI. No React in here.
-import { readScratchJson, type ScratchConfig } from './scratch';
-import { newShell, runShell, type Host, type ShellEnv } from './shell';
-import { splitWords } from './shellcore';
+import { type Host, newShell, readScratchJson, runShell, type ScratchConfig, type ShellEnv, splitWords } from '@azure-sim/shell';
 
 export type LineType = 'input' | 'output' | 'error' | 'success' | 'heading' | 'alert';
 

@@ -1,0 +1,93 @@
+/* Shared look of every lab: the green phosphor CRT palette and terminal chrome.
+   Import after tailwindcss. @source makes Tailwind scan this package's components. */
+@source './';
+
+@theme {
+  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+
+  /* Green phosphor CRT palette */
+  --color-ink: #010805;
+  --color-panel: #03110a;
+  --color-line: #0d3b1f;
+  --color-dim: #2f9a58;
+  --color-fg: #7dffa6;
+  --color-accent: #39ff7a;
+  --color-ok: #d6ffe3;
+  --color-err: #ff5a4f;
+  --color-warn: #ffb000;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-ink);
+  background-image: radial-gradient(ellipse at center, rgb(57 255 122 / 0.07) 0%, transparent 70%);
+  color: var(--color-fg);
+  font-family: var(--font-mono);
+  text-shadow: 0 0 4px rgb(57 255 122 / 0.45);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint targeting grid behind the workspace */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(57 255 122 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(57 255 122 / 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* CRT scanlines + vignette, layered over everything */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+body::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0) 0px,
+    rgb(0 0 0 / 0) 2px,
+    rgb(0 0 0 / 0.22) 3px
+  );
+}
+
+body::after {
+  background: radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.65) 100%);
+  animation: flicker 6s infinite steps(1);
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 0.92; }
+  50% { opacity: 1; }
+}
+
+/* Panels pick up a soft phosphor bloom */
+.glow {
+  box-shadow: 0 0 0 1px rgb(57 255 122 / 0.06), 0 0 24px rgb(57 255 122 / 0.06) inset;
+}
+
+.text-glow {
+  text-shadow: 0 0 6px currentColor, 0 0 14px currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+}
+
+::selection {
+  background: rgb(57 255 122 / 0.3);
+  color: #fff;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
