@@ -1,0 +1,52 @@
+
+Command
+    az tag update : Selectively update the set of tags on a specific resource.
+        The az tag update command with an id selectively updates the set of tags on a resource,
+        resource group or subscription. This operation allows replacing, merging or selectively
+        deleting tags on the specified resource, resource group or subscription. The specified
+        entity can have a maximum of 50 tags at the end of the operation. The 'replace' option
+        replaces the entire set of existing tags with a new set. The 'merge' option allows adding
+        tags with new names and updating the values of tags with existing names. The 'delete' option
+        allows selectively deleting tags based on given names or name/value pairs.
+
+Arguments
+    --operation   [Required] : The update operation. Options are Merge, Replace and Delete.  Allowed
+                               values: Delete, Merge, Replace.
+    --resource-id [Required] : The resource identifier for the entity being tagged. A resource, a
+                               resource group or a subscription may be tagged.
+    --tags        [Required] : The tags to be updated on the resource.
+
+Global Policy Arguments
+    --acquire-policy-token   : Acquiring an Azure Policy token automatically for this resource
+                               operation.
+    --change-reference       : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                  : Increase logging verbosity to show all debug logs.
+    --help -h                : Show this help message and exit.
+    --only-show-errors       : Only show errors, suppressing warnings.
+    --output -o              : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                               yamlc.  Default: json.
+    --query                  : JMESPath query string. See http://jmespath.org/ for more information
+                               and examples.
+    --subscription           : Name or ID of subscription. You can configure the default
+                               subscription using `az account set -s NAME_OR_ID`.
+    --verbose                : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Selectively update the set of tags on a subscription with "merge" Operation.
+        az tag update --resource-id /subscriptions/{sub-id} --operation merge --tags key1=value1
+        key3=value3
+
+
+    Selectively update the set of tags on a resource group with "replace" Operation.
+        az tag update --resource-id /subscriptions/{sub-id}/resourcegroups/{rg} --operation replace
+        --tags key1=value1 key3=value3
+
+
+    Selectively update the set of tags on a resource with "delete" Operation.
+        az tag update --resource-id /subscriptions/{sub-
+        id}/resourcegroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName} --operation
+        delete --tags key1=value1
+
+

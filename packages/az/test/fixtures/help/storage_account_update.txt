@@ -1,0 +1,355 @@
+
+Command
+    az storage account update : Update the properties of a storage account.
+
+Arguments
+    --access-tier                                            : Required for storage accounts where
+                                                               kind = BlobStorage. The access tier
+                                                               is used for billing. The "Premium"
+                                                               access tier is the default value for
+                                                               premium block blobs storage account
+                                                               type and it cannot be changed for the
+                                                               premium block blobs storage account
+                                                               type.  Allowed values: Cold, Cool,
+                                                               Hot, Premium, Smart.
+    --allow-blob-public-access                               : Allow or disallow public access to
+                                                               all blobs or containers in the
+                                                               storage account. If not specified,
+                                                               the default value is false for new
+                                                               account to follow best security
+                                                               practices. When true, containers in
+                                                               the account may be configured for
+                                                               public access. Note that setting this
+                                                               property to true does not enable
+                                                               anonymous access to any data in the
+                                                               account. The additional step of
+                                                               configuring the public access setting
+                                                               for a container is required to enable
+                                                               anonymous access.  Allowed values:
+                                                               false, true.
+    --allow-cross-tenant-replication -r                      : Allow or disallow cross AAD tenant
+                                                               object replication. Set this property
+                                                               to true for new or existing accounts
+                                                               only if object replication policies
+                                                               will involve storage accounts in
+                                                               different AAD tenants. If not
+                                                               specified, the default value is false
+                                                               for new accounts to follow best
+                                                               security practices.  Allowed values:
+                                                               false, true.
+    --allow-shared-key-access -k                             : Indicate whether the storage account
+                                                               permits requests to be authorized
+                                                               with the account access key via
+                                                               Shared Key. If false, then all
+                                                               requests, including shared access
+                                                               signatures, must be authorized with
+                                                               Azure Active Directory (Azure AD).
+                                                               The default value is null, which is
+                                                               equivalent to true.  Allowed values:
+                                                               false, true.
+    --allowed-copy-scope                                     : Restrict copy to and from Storage
+                                                               Accounts within an AAD tenant or with
+                                                               Private Links to the same VNet.
+                                                               Allowed values: AAD, All,
+                                                               PrivateLink.
+    --assign-identity                                        : Generate and assign a new Storage
+                                                               Account Identity for this storage
+                                                               account for use with key management
+                                                               services like Azure KeyVault.
+    --blob-geo-sla --enable-blob-geo-priority-replication    : Indicates whether Blob Geo Priority
+                                                               Replication is enabled for the
+                                                               storage account.  Allowed values:
+                                                               false, true.
+    --custom-domain                                          : User domain assigned to the storage
+                                                               account. Name is the CNAME source.
+                                                               Use "" to clear existing value.
+    --enable-large-file-share                                : Enable the capability to support
+                                                               large file shares with more than 5
+                                                               TiB capacity for storage account.Once
+                                                               the property is enabled, the feature
+                                                               cannot be disabled. Currently only
+                                                               supported for LRS and ZRS replication
+                                                               types, hence account conversions to
+                                                               geo-redundant accounts would not be
+                                                               possible. For more information,
+                                                               please refer to https://go.microsoft.
+                                                               com/fwlink/?linkid=2086047.
+    --enable-local-user                                      : Enable local user features.  Allowed
+                                                               values: false, true.
+    --enable-sftp                                            : Enable Secure File Transfer Protocol.
+                                                               Allowed values: false, true.
+    --encryption-services                                    : Specifies which service(s) to
+                                                               encrypt.  Allowed values: blob, file,
+                                                               queue, table.
+    --https-only                                             : Allows https traffic only to storage
+                                                               service.  Allowed values: false,
+                                                               true.
+    --key-exp-days --key-expiration-period-in-days [Preview] : Expiration period in days of the Key
+                                                               Policy assigned to the storage
+                                                               account.
+        WARNING: Argument '--key-expiration-period-in-days' is in preview and under development.
+        Reference and support levels: https://aka.ms/CLI_refstatus
+    --min-tls-version                                        : The minimum TLS version to be
+                                                               permitted on requests to storage.
+                                                               TLS1_3 is not yet supported.
+                                                               Microsoft recommends setting
+                                                               MinimumTlsVersion to TLS1_2.  Allowed
+                                                               values: TLS1_0, TLS1_1, TLS1_2,
+                                                               TLS1_3.
+    --public-network-access                                  : Enable or disable public network
+                                                               access to the storage account.
+                                                               Allowed values: Disabled, Enabled,
+                                                               SecuredByPerimeter.
+    --sas-exp --sas-expiration-period                        : Expiration period of the SAS Policy
+                                                               assigned to the storage account,
+                                                               DD.HH:MM:SS.
+    --sas-exp-action --sas-expiration-action                 : The action to be performed when
+                                                               --sas-expiration-period is violated.
+                                                               The 'Log' action can be used for
+                                                               audit purposes and the 'Block' action
+                                                               can be used to block and deny the
+                                                               usage of SAS tokens that do not
+                                                               adhere to the sas policy expiration
+                                                               period. The default action is 'Log'.
+                                                               Allowed values: Block, Log.
+    --sku                                                    : Note that the SKU name cannot be
+                                                               updated to Standard_ZRS, Premium_LRS
+                                                               or Premium_ZRS, nor can accounts of
+                                                               those SKU names be updated to any
+                                                               other value.  Allowed values:
+                                                               PremiumV2_LRS, PremiumV2_ZRS,
+                                                               Premium_LRS, Premium_ZRS,
+                                                               StandardV2_GRS, StandardV2_GZRS,
+                                                               StandardV2_LRS, StandardV2_ZRS,
+                                                               Standard_GRS, Standard_GZRS,
+                                                               Standard_LRS, Standard_RAGRS,
+                                                               Standard_RAGZRS, Standard_ZRS.
+    --tags                                                   : Space-separated tags: key[=value]
+                                                               [key[=value] ...]. Use '' to clear
+                                                               existing tags.
+    --upgrade-to-storagev2                                   : Upgrade Storage Account Kind to
+                                                               StorageV2.  Allowed values: false,
+                                                               true.
+    --use-subdomain                                          : Specify whether to use indirect CNAME
+                                                               validation.  Allowed values: false,
+                                                               true.
+    --yes -y                                                 : Do not prompt for confirmation.
+    --zone-placement-policy                                  : The availability zone pinning policy
+                                                               for the storage account.  Allowed
+                                                               values: Any, None.
+    --zones                                                  : Describes the available zones for the
+                                                               product where storage account
+                                                               resource can be created.
+
+Account Level Immutability Arguments
+    --allow-append --allow-protected-append-writes -w        : This property can only be changed for
+                                                               disabled and unlocked time-based
+                                                               retention policies. When enabled, new
+                                                               blocks can be written to an append
+                                                               blob while maintaining immutability
+                                                               protection and compliance. Only new
+                                                               blocks can be added and any existing
+                                                               blocks cannot be modified or deleted.
+                                                               Allowed values: false, true.
+    --immutability-period --immutability-period-in-days      : The immutability period for the blobs
+                                                               in the container since the policy
+                                                               creation, in days.
+    --immutability-state                                     : Defines the mode of the policy.
+                                                               Disabled state disables the policy,
+                                                               Unlocked state allows increase and
+                                                               decrease of immutability retention
+                                                               time and also allows toggling allow-
+                                                               protected-append-write property,
+                                                               Locked state only allows the increase
+                                                               of the immutability retention time. A
+                                                               policy can only be created in a
+                                                               Disabled or Unlocked state and can be
+                                                               toggled between the two states. Only
+                                                               a policy in an Unlocked state can
+                                                               transition to a Locked state which
+                                                               cannot be reverted.  Allowed values:
+                                                               Disabled, Locked, Unlocked.
+
+Azure Active Directory Properties Arguments
+    --account-type                                           : Specify the Active Directory account
+                                                               type for Azure Storage.  Allowed
+                                                               values: Computer, User.
+    --azure-storage-sid                                      : Specify the security identifier (SID)
+                                                               for Azure Storage. Required when
+                                                               --enable-files-adds is set to True.
+    --domain-guid                                            : Specify the domain GUID. Required
+                                                               when --enable-files-adds is set to
+                                                               True.
+    --domain-name                                            : Specify the primary domain that the
+                                                               AD DNS server is authoritative for.
+                                                               Required when --enable-files-adds is
+                                                               set to True.
+    --domain-sid                                             : Specify the security identifier
+                                                               (SID). Required when --enable-files-
+                                                               adds is set to True.
+    --forest-name                                            : Specify the Active Directory forest
+                                                               to get. Required when --enable-files-
+                                                               adds is set to True.
+    --net-bios-domain-name                                   : Specify the NetBIOS domain name.
+                                                               Required when --enable-files-adds is
+                                                               set to True.
+    --sam-account-name                                       : Specify the Active Directory
+                                                               SAMAccountName for Azure Storage.
+
+Azure Files Identity Based Authentication Arguments
+    --default-share-permission -d                            : Default share permission for users
+                                                               using Kerberos authentication if RBAC
+                                                               role is not assigned.  Allowed
+                                                               values: None,
+                                                               StorageFileDataSmbShareContributor, S
+                                                               torageFileDataSmbShareElevatedContrib
+                                                               utor, StorageFileDataSmbShareReader.
+    --enable-files-aadds                                     : Enable Azure Active Directory Domain
+                                                               Services authentication for Azure
+                                                               Files.  Allowed values: false, true.
+    --enable-files-aadkerb                                   : Enable Azure Files Active Directory
+                                                               Domain Service Kerberos
+                                                               Authentication for the storage
+                                                               account.  Allowed values: false,
+                                                               true.
+    --enable-files-adds                                      : Enable Azure Files Active Directory
+                                                               Domain Service Authentication for
+                                                               storage account. When --enable-files-
+                                                               adds is set to true, Azure Active
+                                                               Directory Properties arguments must
+                                                               be provided.  Allowed values: false,
+                                                               true.
+    --enable-smb-oauth                                       : Specifies if managed identities can
+                                                               access SMB shares using OAuth.
+                                                               Allowed values: false, true.
+
+Customer managed key Arguments
+    --encryption-key-name                                    : The name of the KeyVault key.
+    --encryption-key-source                                  : The default encryption key source.
+                                                               Allowed values: Microsoft.Keyvault,
+                                                               Microsoft.Storage.
+    --encryption-key-vault                                   : The Uri of the KeyVault.
+    --encryption-key-version                                 : The version of the KeyVault key to
+                                                               use, which will opt out of implicit
+                                                               key rotation. Please use "" to opt in
+                                                               key auto-rotation again.
+    --key-vault-federated-client-id -f                       : ClientId of the multi-tenant
+                                                               application to be used in conjunction
+                                                               with the user-assigned identity for
+                                                               cross-tenant customer-managed-keys
+                                                               server-side encryption on the storage
+                                                               account.
+    --key-vault-user-identity-id -u                          : Resource identifier of the
+                                                               UserAssigned identity to be
+                                                               associated with server-side
+                                                               encryption on the storage account.
+
+Generic Update Arguments
+    --add                                                    : Add an object to a list of objects by
+                                                               specifying a path and key value
+                                                               pairs.  Example: `--add
+                                                               property.listProperty <key=value,
+                                                               string or JSON string>`.
+    --force-string                                           : When using 'set' or 'add', preserve
+                                                               string literals instead of attempting
+                                                               to convert to JSON.
+    --remove                                                 : Remove a property or an element from
+                                                               a list.  Example: `--remove
+                                                               property.list <indexToRemove>` OR
+                                                               `--remove propertyToRemove`.
+    --set                                                    : Update an object by specifying a
+                                                               property path and value to set.
+                                                               Example: `--set
+                                                               property1.property2=<value>`.
+
+Global Policy Arguments
+    --acquire-policy-token                                   : Acquiring an Azure Policy token
+                                                               automatically for this resource
+                                                               operation.
+    --change-reference                                       : The related change reference ID for
+                                                               this resource operation.
+
+IPv6 Endpoint Arguments
+    --publish-ipv6-endpoint                        [Preview] : A boolean flag which indicates
+                                                               whether IPv6 storage endpoints are to
+                                                               be published.  Allowed values: false,
+                                                               true.
+        WARNING: Argument '--publish-ipv6-endpoint' is in preview and under development. Reference
+        and support levels: https://aka.ms/CLI_refstatus
+
+Identity Arguments
+    --identity-type                                          : The identity type.  Allowed values:
+                                                               None, SystemAssigned,
+                                                               SystemAssigned,UserAssigned,
+                                                               UserAssigned.
+    --user-identity-id                                       : The key is the ARM resource
+                                                               identifier of the identity. Only 1
+                                                               User Assigned identity is permitted
+                                                               here.
+
+Network Rule Arguments
+    --bypass                                                 : Bypass traffic for space-separated
+                                                               uses.  Allowed values: AzureServices,
+                                                               Logging, Metrics, None.
+    --default-action                                         : Default action to apply when no rule
+                                                               matches.  Allowed values: Allow,
+                                                               Deny.
+
+Resource Id Arguments
+    --ids                                                    : One or more resource IDs (space-
+                                                               delimited). It should be a complete
+                                                               resource ID containing all
+                                                               information of 'Resource Id'
+                                                               arguments. You should provide either
+                                                               --ids or other 'Resource Id'
+                                                               arguments.
+    --name -n                                                : The storage account name.
+    --resource-group -g                                      : Name of resource group. You can
+                                                               configure the default group using `az
+                                                               configure --defaults group=<name>`.
+    --subscription                                           : Name or ID of subscription. You can
+                                                               configure the default subscription
+                                                               using `az account set -s NAME_OR_ID`.
+
+Routing Preference Arguments
+    --publish-internet-endpoints                             : A boolean flag which indicates
+                                                               whether internet routing storage
+                                                               endpoints are to be published.
+                                                               Allowed values: false, true.
+    --publish-microsoft-endpoints                            : A boolean flag which indicates
+                                                               whether microsoft routing storage
+                                                               endpoints are to be published.
+                                                               Allowed values: false, true.
+    --routing-choice                                         : Routing Choice defines the kind of
+                                                               network routing opted by the user.
+                                                               Allowed values: InternetRouting,
+                                                               MicrosoftRouting.
+
+Global Arguments
+    --debug                                                  : Increase logging verbosity to show
+                                                               all debug logs.
+    --help -h                                                : Show this help message and exit.
+    --only-show-errors                                       : Only show errors, suppressing
+                                                               warnings.
+    --output -o                                              : Output format.  Allowed values: json,
+                                                               jsonc, none, table, tsv, yaml, yamlc.
+                                                               Default: json.
+    --query                                                  : JMESPath query string. See
+                                                               http://jmespath.org/ for more
+                                                               information and examples.
+    --verbose                                                : Increase logging verbosity. Use
+                                                               --debug for full debug logs.
+
+Examples
+    Update the properties of a storage account. (autogenerated)
+        az storage account update --default-action Allow --name MyStorageAccount --resource-group
+        MyResourceGroup
+
+
+    Use a user-assigned managed identity instead of system-assigned managed identity
+        az storage account update --name <storage-account-name> --resource-group <resource-group-
+        name> --encryption-key-vault <keyvault-uri> --encryption-key-name <key-name-in-keyvault>
+        --encryption-key-source Microsoft.Keyvault --key-vault-user-identity-id <user-assigned-
+        identity-id> --identity-type UserAssigned --user-identity-id <user-assigned-identity-id>`
+
+

@@ -1,0 +1,18 @@
+
+Command
+    az ad group show : Get the details of a group.
+
+Arguments
+    --group -g [Required] : Group's object id or display name(prefix also works if there is a unique
+                            match).
+
+Global Arguments
+    --debug               : Increase logging verbosity to show all debug logs.
+    --help -h             : Show this help message and exit.
+    --only-show-errors    : Only show errors, suppressing warnings.
+    --output -o           : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                            yamlc.  Default: json.
+    --query               : JMESPath query string. See http://jmespath.org/ for more information and
+                            examples.
+    --verbose             : Increase logging verbosity. Use --debug for full debug logs.
+

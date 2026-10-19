@@ -1,0 +1,108 @@
+
+Command
+    az webapp deploy : Deploys a provided artifact to Azure Web Apps.
+        Deploys a zip, war, jar, ear, static file, startup script, or library to an existing Azure
+        Web App.
+        The web app must already exist — use 'az webapp create' to create one first.
+
+        IMPORTANT: Zip deployment does NOT automatically run build automation (dependency
+        installation,
+        compilation, etc.). If your package is not pre-built, you must set the
+        app setting SCM_DO_BUILD_DURING_DEPLOYMENT=true before deploying:
+
+            az webapp config appsettings set -g ResourceGroup -n AppName --settings
+        SCM_DO_BUILD_DURING_DEPLOYMENT=true
+
+        Supported --type values: zip, war, jar, ear, lib, static, startup.
+
+Arguments
+    --async                : If true, the artifact is deployed asynchronously. (The command will
+                             exit once the artifact is pushed to the web app.). Synchronous
+                             deployments are not yet supported when using "--src-url".  Allowed
+                             values: false, true.
+    --clean                : If true, cleans the target directory prior to deploying the file(s).
+                             Default value is determined based on artifact type.  Allowed values:
+                             false, true.
+    --deploymentTag        : Linux only. A friendly name used to identify the deployment.
+    --enable-kudu-warmup   : If true, kudu will be warmed up before performing deployment for a
+                             linux webapp.  Allowed values: false, true.  Default: True.
+    --enriched-errors      : If true, deployment failures will show context-enriched diagnostics
+                             with error codes, suggested fixes, and Copilot prompts. Enabled by
+                             default; use --enriched-errors false to disable.  Allowed values:
+                             false, true.  Default: True.
+    --ignore-stack         : If true, any stack-specific defaults are ignored.  Allowed values:
+                             false, true.
+    --restart              : If true, the web app will be restarted following the deployment. Set
+                             this to false if you are deploying multiple artifacts and do not want
+                             to restart the site on the earlier deployments.  Allowed values: false,
+                             true.
+    --show-secure-build    : Show a Secure Build summary and full-report link after a local
+                             deployment, including when --async true is used. For URL deployments,
+                             show the command to run after deployment completes. Supported only for
+                             Linux web apps. Secure Build analysis can add several minutes to a
+                             local deployment.
+    --slot -s              : The name of the slot. Default to the productions slot if not specified.
+    --src-path             : Path of the artifact to be deployed. Ex: "myapp.zip" or
+                             "/myworkspace/apps/myapp.war".
+    --src-url              : URL of the artifact. The webapp will pull the artifact from this URL.
+                             Ex: "http://mysite.com/files/myapp.war?key=123".
+    --tag     [Deprecated] : Linux only. A friendly name used to identify the deployment.
+        WARNING: Option '--tag' has been deprecated and will be removed in a future release. Use '--
+        deploymentTag' instead.
+    --target-path          : Absolute path that the artifact should be deployed to. Defaults to
+                             "home/site/wwwroot/" Ex: "/home/site/deployments/tools/",
+                             "/home/site/scripts/startup-script.sh".
+    --timeout              : Timeout for the deployment operation in milliseconds. Ignored when
+                             using "--src-url" since synchronous deployments are not yet supported
+                             when using "--src-url".
+    --track-status         : If true, web app startup status during deployment will be tracked for
+                             linux web apps.  Allowed values: false, true.  Default: True.
+    --type                 : Used to override the type of artifact being deployed.  Allowed values:
+                             ear, jar, lib, startup, static, war, zip.
+
+Global Policy Arguments
+    --acquire-policy-token : Acquiring an Azure Policy token automatically for this resource
+                             operation.
+    --change-reference     : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --ids                  : One or more resource IDs (space-delimited). It should be a complete
+                             resource ID containing all information of 'Resource Id' arguments. You
+                             should provide either --ids or other 'Resource Id' arguments.
+    --name -n              : Name of the webapp to deploy to.
+    --resource-group -g    : Name of resource group. You can configure the default group using `az
+                             configure --defaults group=<name>`.
+    --subscription         : Name or ID of subscription. You can configure the default subscription
+                             using `az account set -s NAME_OR_ID`.
+
+Global Arguments
+    --debug                : Increase logging verbosity to show all debug logs.
+    --help -h              : Show this help message and exit.
+    --only-show-errors     : Only show errors, suppressing warnings.
+    --output -o            : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                             yamlc.  Default: json.
+    --query                : JMESPath query string. See http://jmespath.org/ for more information
+                             and examples.
+    --verbose              : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Enable remote build and deploy an app from a zip file.
+        az webapp config appsettings set -g ResourceGroup -n AppName --settings
+        SCM_DO_BUILD_DURING_DEPLOYMENT=true
+        az webapp deploy -g ResourceGroup -n AppName --src-path app.zip
+
+
+    Deploy a war file asynchronously.
+        az webapp deploy --resource-group ResourceGroup --name AppName --src-path SourcePath --type
+        war --async true
+
+    Deploy a static text file to wwwroot/staticfiles/test.txt
+        az webapp deploy --resource-group ResourceGroup --name AppName --src-path SourcePath --type
+        static --target-path staticfiles/test.txt
+
+    Deploy a zip file with enriched error diagnostics on failure.
+        az webapp deploy -g ResourceGroup -n AppName --src-path app.zip --enriched-errors true
+
+    Deploy a Python app and show a Secure Build summary and full-report link.
+        az webapp deploy -g ResourceGroup -n AppName --src-path app.zip --show-secure-build
+

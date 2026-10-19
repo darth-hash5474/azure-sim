@@ -1,0 +1,79 @@
+
+Command
+    az storage share-rm delete : Delete the specified Azure file share or share snapshot.
+        Delete the specified Azure file share or share snapshot.
+        BREAKING CHANGE: Snapshot can not be deleted by default and we have added a new parameter to
+        use if you want to include sanpshots for delete operation.
+
+Arguments
+    --include                        : Optional. Valid values are: snapshots, leased-snapshots,
+                                       none. The default value is none. For 'snapshots', the file
+                                       share is deleted including all of its file share snapshots.
+                                       If the file share contains leased-snapshots, the deletion
+                                       fails. For 'leased-snapshots', the file share is deleted
+                                       included all of its file share snapshots (leased/unleased).
+                                       For 'none', the file share is deleted if it has no share
+                                       snapshots. If the file share contains any snapshots (leased
+                                       or unleased), the deletion fails.  Default: none.
+    --snapshot                       : Optional, used to delete a snapshot.The DateTime value that
+                                       specifies the share snapshot to retrieve.
+    --yes -y                         : Do not prompt for confirmation.
+
+Global Policy Arguments
+    --acquire-policy-token           : Acquiring an Azure Policy token automatically for this
+                                       resource operation.
+    --change-reference               : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --account-name --storage-account : The name of the storage account within the specified resource
+                                       group. Storage account names must be between 3 and 24
+                                       characters in length and use numbers and lower-case letters
+                                       only.
+    --ids                            : One or more resource IDs (space-delimited). It should be a
+                                       complete resource ID containing all information of 'Resource
+                                       Id' arguments. You should provide either --ids or other
+                                       'Resource Id' arguments.
+    --name --share-name -n           : The name of the file share within the specified storage
+                                       account. File share names must be between 3 and 63 characters
+                                       in length and use numbers, lower-case letters and dash (-)
+                                       only. Every dash (-) character must be immediately preceded
+                                       and followed by a letter or number.
+    --resource-group -g              : Name of resource group. You can configure the default group
+                                       using `az configure --defaults group=<name>`.
+    --subscription                   : Name or ID of subscription. You can configure the default
+                                       subscription using `az account set -s NAME_OR_ID`.
+
+Global Arguments
+    --debug                          : Increase logging verbosity to show all debug logs.
+    --help -h                        : Show this help message and exit.
+    --only-show-errors               : Only show errors, suppressing warnings.
+    --output -o                      : Output format.  Allowed values: json, jsonc, none, table,
+                                       tsv, yaml, yamlc.  Default: json.
+    --query                          : JMESPath query string. See http://jmespath.org/ for more
+                                       information and examples.
+    --verbose                        : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Delete an Azure file share 'myfileshare' under the storage account 'mystorageaccount' (account
+    name) in resource group 'MyResourceGroup'.
+        az storage share-rm delete -g MyResourceGroup --storage-account mystorageaccount --name
+        myfileshare
+
+    Delete an Azure file share 'myfileshare' under the storage account 'mystorageaccount' (account
+    id).
+        az storage share-rm delete --storage-account mystorageaccount --name myfileshare
+
+    Delete an Azure file share by resource id.
+        az storage share-rm delete --ids file-share-id
+
+    Delete an Azure file share snapshot.
+        az storage share-rm delete --ids file-share-id --snapshot "2021-03-25T05:29:56.0000000Z"
+
+    Delete an Azure file share and all its snapshots.
+        az storage share-rm delete --include snapshots -g MyResourceGroup --storage-account
+        mystorageaccount --name myfileshare
+
+    Delete an Azure file share and all its snapshots (leased/unleased).
+        az storage share-rm delete --include leased-snapshots -g MyResourceGroup --storage-account
+        mystorageaccount --name myfileshare
+

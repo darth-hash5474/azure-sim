@@ -1,0 +1,94 @@
+
+Command
+    az network lb rule create : Create a load balancing rule.
+
+Arguments
+    --lb-name                     [Required] : The load balancer name.
+    --name -n                     [Required] : The name of the load balancing rule.
+    --resource-group -g           [Required] : Name of resource group. You can configure the default
+                                               group using `az configure --defaults group=<name>`.
+    --no-wait                                : Do not wait for the long-running operation to finish.
+                                               Allowed values: 0, 1, f, false, n, no, t, true, y,
+                                               yes.
+
+Global Policy Arguments
+    --acquire-policy-token                   : Acquiring an Azure Policy token automatically for
+                                               this resource operation.
+    --change-reference                       : The related change reference ID for this resource
+                                               operation.
+
+Properties Arguments
+    --backend-port                [Required] : The port used for internal connections on the
+                                               endpoint. Acceptable values are between 0 and 65535.
+                                               Note that value 0 enables "Any Port".
+    --frontend-port               [Required] : The port for the external endpoint. Port numbers for
+                                               each rule must be unique within the Load Balancer.
+                                               Acceptable values are between 0 and 65534. Note that
+                                               value 0 enables "Any Port".
+    --protocol                    [Required] : The reference to the transport protocol used by the
+                                               load balancing rule.  Allowed values: All, Tcp, Udp.
+    --backend-pool-name --backend-pools-name : List of ID or name of the backend address pools.
+                                               Multiple pools are only supported by Gateway SKU load
+                                               balancer. If only one exists, omit to use as default.
+                                               Support shorthand-syntax, json-file and yaml-file.
+                                               Try "??" to show more.
+    --disable-outbound-snat                  : Configures SNAT for the VMs in the backend pool to
+                                               use the publicIP address specified in the frontend of
+                                               the load balancing rule.  Allowed values: 0, 1, f,
+                                               false, n, no, t, true, y, yes.
+    --enable-floating-ip --floating-ip       : Configures a virtual machine's endpoint for the
+                                               floating IP capability required to configure a SQL
+                                               AlwaysOn Availability Group. This setting is required
+                                               when using the SQL AlwaysOn Availability Groups in
+                                               SQL server. This setting can't be changed after you
+                                               create the endpoint.  Allowed values: 0, 1, f, false,
+                                               n, no, t, true, y, yes.
+    --enable-tcp-reset                       : Receive bidirectional TCP Reset on TCP flow idle
+                                               timeout or unexpected connection termination. This
+                                               element is only used when the protocol is set to TCP.
+                                               Allowed values: 0, 1, f, false, n, no, t, true, y,
+                                               yes.
+    --frontend-ip --frontend-ip-name         : The name of ID of the frontend IP configuration.
+    --idle-timeout --idle-timeout-in-minutes : The timeout for the TCP idle connection. The value
+                                               can be set between 4 and 30 minutes. The default
+                                               value is 4 minutes. This element is only used when
+                                               the protocol is set to TCP.
+    --load-distribution                      : The load distribution policy for this rule.  Allowed
+                                               values: Default, SourceIP, SourceIPProtocol.
+                                               Default: Default.
+    --probe --probe-name                     : The ID or Name of an existing probe to associate with
+                                               this rule.
+
+Global Arguments
+    --debug                                  : Increase logging verbosity to show all debug logs.
+    --help -h                                : Show this help message and exit.
+    --only-show-errors                       : Only show errors, suppressing warnings.
+    --output -o                              : Output format.  Allowed values: json, jsonc, none,
+                                               table, tsv, yaml, yamlc.  Default: json.
+    --query                                  : JMESPath query string. See http://jmespath.org/ for
+                                               more information and examples.
+    --subscription                           : Name or ID of subscription. You can configure the
+                                               default subscription using `az account set -s
+                                               NAME_OR_ID`.
+    --verbose                                : Increase logging verbosity. Use --debug for full
+                                               debug logs.
+
+Examples
+    Create a load balancing rule that assigns a front-facing IP configuration and port to an address
+    pool and port.
+        az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyLbRule --protocol Tcp
+        --frontend-ip MyFrontEndIp --frontend-port 80 --backend-pool-name MyAddressPool --backend-
+        port 80
+
+    Create a load balancing rule that assigns a front-facing IP configuration and port to an address
+    pool and port with the floating ip feature.
+        az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyLbRule --protocol Tcp
+        --frontend-ip MyFrontEndIp --backend-pool-name MyAddressPool --floating-ip true --frontend-
+        port 80 --backend-port 80
+
+    Create an HA ports load balancing rule that assigns a frontend IP and port to use all available
+    backend IPs in a pool on the same port.
+        az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyHAPortsRule --protocol All
+        --frontend-port 0 --backend-port 0 --frontend-ip MyFrontendIp --backend-pool-name
+        MyAddressPool
+

@@ -1,0 +1,29 @@
+
+Command
+    az policy definition show : Retrieves a policy definition.
+        Retrieve and show the details of the policy definition in the given subscription or
+        management group with the given name.
+
+Arguments
+    --name -n [Required] : The name of the policy definition.
+    --management-group   : The management group.
+
+Global Arguments
+    --debug              : Increase logging verbosity to show all debug logs.
+    --help -h            : Show this help message and exit.
+    --only-show-errors   : Only show errors, suppressing warnings.
+    --output -o          : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                           yamlc.  Default: json.
+    --query              : JMESPath query string. See http://jmespath.org/ for more information and
+                           examples.
+    --subscription       : Name or ID of subscription. You can configure the default subscription
+                           using `az account set -s NAME_OR_ID`.
+    --verbose            : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Retrieve a policy definition at management group level
+        az policy definition show --management-group MyManagementGroup --name ResourceNaming
+
+    Retrieve a policy definition
+        az policy definition show --name ResourceNaming
+

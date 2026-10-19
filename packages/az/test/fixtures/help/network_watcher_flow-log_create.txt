@@ -1,0 +1,120 @@
+
+Command
+    az network watcher flow-log create : Create a flow log on a network security group.
+
+Arguments
+    --name -n     [Required] : The name of the flow logger.
+    --enabled                : Enable logging. Default: true.  Allowed values: 0, 1, f, false, n,
+                               no, t, true, y, yes.
+    --location -l            : Location to identify the exclusive Network Watcher under a region.
+                               Only one Network Watcher can be existed per subscription and region.
+                               When not specified, the location of the resource group will be used.
+    --nic                    : Name or ID of the Network Interface (NIC) Resource.
+    --no-wait                : Do not wait for the long-running operation to finish.  Allowed
+                               values: 0, 1, f, false, n, no, t, true, y, yes.
+    --nsg                    : Name or ID of the network security group.
+    --resource-group -g      : Name of resource group. You can configure the default group using `az
+                               configure --defaults group=<name>`.
+    --retention              : Number of days to retain logs.
+    --storage-account        : Name or ID of the storage account in which to save the flow logs.
+                               Must be in the same region of flow log.
+    --subnet                 : Name or ID of Subnet.
+    --tags                   : Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear
+                               existing tags.  Support shorthand-syntax, json-file and yaml-file.
+                               Try "??" to show more.
+    --user-assigned-identity : Name or ID of the ManagedIdentity Resource.
+    --vnet                   : Name or ID of the Virtual Network Resource.
+
+Format Arguments
+    --format                 : File type of the flow log.  Allowed values: JSON.
+    --log-version            : Version (revision) of the flow log.
+
+Global Policy Arguments
+    --acquire-policy-token   : Acquiring an Azure Policy token automatically for this resource
+                               operation.
+    --change-reference       : The related change reference ID for this resource operation.
+
+Parameters Arguments
+    --identity               : FlowLog resource Managed Identity  Support shorthand-syntax, json-
+                               file and yaml-file. Try "??" to show more.
+
+Properties Arguments
+    --filtering-criteria     : Optional field to filter flowlogs based on SrcIP, SrcPort, DstIP,
+                               DstPort, Protocol, Encryption, Direction and Action. If not
+                               specified, all flowlogs will be logged.
+    --record-types           : Optional field to filter network traffic logs based on flow states.
+                               Value of this field could be any comma separated combination string
+                               of letters B,C,E or D. B represents Begin, when a flow is created. C
+                               represents Continue for an ongoing flow generated at every five-
+                               minute interval. E represents End, when a flow is terminated. D
+                               represents Deny, when a flow is denied. If not specified, all network
+                               traffic will be logged.
+
+Traffic Analytics Arguments
+    --interval               : Interval in minutes at which to conduct flow analytics. Temporarily
+                               allowed values are 10 and 60.  Default: 60.
+    --traffic-analytics      : Enable traffic analytics. Defaults to true if `--workspace` is
+                               provided.  Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --workspace              : Name or ID of a Log Analytics workspace. Must be in the same region
+                               of flow log.
+
+Global Arguments
+    --debug                  : Increase logging verbosity to show all debug logs.
+    --help -h                : Show this help message and exit.
+    --only-show-errors       : Only show errors, suppressing warnings.
+    --output -o              : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                               yamlc.  Default: json.
+    --query                  : JMESPath query string. See http://jmespath.org/ for more information
+                               and examples.
+    --subscription           : Name or ID of subscription. You can configure the default
+                               subscription using `az account set -s NAME_OR_ID`.
+    --verbose                : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Create a flow log with Network Security Group name
+        az network watcher flow-log create --location westus --resource-group MyResourceGroup --name
+        MyFlowLog --nsg MyNetworkSecurityGroupName --storage-account account
+
+    Create a flow log with VNet name
+        az network watcher flow-log create --location westus --resource-group MyResourceGroup --name
+        MyFlowLog --vnet MyVNetName --storage-account account
+
+    Create a flow log with Subnet name
+        az network watcher flow-log create --location westus --resource-group MyResourceGroup --name
+        MyFlowLog --vnet MyVNetName --subnet MySubnetName --storage-account account
+
+    Create a flow log with NIC name
+        az network watcher flow-log create --location westus --resource-group MyResourceGroup --name
+        MyFlowLog --nic MyNICName --storage-account account
+
+    Create a flow log with Network Security Group ID (could be in other resource group)
+        az network watcher flow-log create --location westus --name MyFlowLog --nsg
+        MyNetworkSecurityGroupID --storage-account account
+
+    Create a flow log with Virtual Network ID (could be in other resource group)
+        az network watcher flow-log create --location westus --name MyFlowLog --vnet MyVNetID
+        --storage-account account
+
+    Create a flow log with Subnet ID (could be in other resource group)
+        az network watcher flow-log create --location westus --name MyFlowLog --subnet SubnetID
+        --storage-account account
+
+    Create a flow log with Network Interface ID (could be in other resource group)
+        az network watcher flow-log create --location westus --name MyFlowLog --nic
+        MyNetworkInterfaceID --storage-account account
+
+    Create or update flow log
+        az network watcher flow-log create --location westus --resource-group MtRGContainingVNet
+        --name MyVNetName-flowlog --vnet MyVNetName --storage-account MyStorageAccountName
+        --filtering-criteria "dstip=20.252.145.59 || DstPort=443"
+
+    Create flow log with recordtypes filtering
+        az network watcher flow-log create --resource-group rg1 --network-watcher-name nw1 --name fl
+        --location centraluseuap --target-resource-id /subscriptions/subid/resourceGroups/rg1/provid
+        ers/Microsoft.Network/networkSecurityGroups/desmondcentral-nsg --storage-account /subscripti
+        ons/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/nwtest1mgvbfmqsigdx
+        e --filtering-criteria srcIP=158.255.7.8 || dstPort=56891 --record-types B,E --enabled True
+        --format JSON --log-version 1 --identity "{type:UserAssigned,user-assigned-identities:{/subs
+        criptions/subid/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentitie
+        s/id1:{}}}"
+

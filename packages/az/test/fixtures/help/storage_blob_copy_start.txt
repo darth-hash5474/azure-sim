@@ -1,0 +1,188 @@
+
+Command
+    az storage blob copy start : Copy a blob asynchronously. Use `az storage blob show` to check the
+    status of the blobs.
+
+Arguments
+    --destination-blob -b      [Required] : Name of the destination blob. If it exists, it will be
+                                            overwritten.
+    --destination-container -c [Required] : The container name.
+    --auth-mode                           : The mode in which to run the command. "login" mode will
+                                            directly use your login credentials for the
+                                            authentication. The legacy "key" mode will attempt to
+                                            query for an account key if no authentication parameters
+                                            for the account are provided. Environment variable:
+                                            AZURE_STORAGE_AUTH_MODE.  Allowed values: key, login.
+    --destination-blob-type               : Defines the type of blob at the destination. Value of
+                                            "Detect" determines the type based on source blob type.
+                                            Allowed values: AppendBlob, BlockBlob, Detect, PageBlob.
+    --destination-lease-id                : The lease ID specified for this header must match the
+                                            lease ID of the destination blob. If the request does
+                                            not include the lease ID or it is not valid, the
+                                            operation fails with status code 412 (Precondition
+                                            Failed).
+    --metadata                            : Metadata in space-separated key=value pairs. This
+                                            overwrites any existing metadata.
+    --rehydrate-priority -r               : Indicate the priority with which to rehydrate an
+                                            archived blob.
+    --requires-sync                       : Enforce that the service will not return a response
+                                            until the copy is complete.  Allowed values: false,
+                                            true.
+    --tags                                : Space-separated tags: key[=value] [key[=value] ...]. Use
+                                            '' to clear existing tags.
+    --tier                                : The tier value to set the blob to. For page blob, the
+                                            tier correlates to the size of the blob and number of
+                                            allowed IOPS. Possible values are P10, P15, P20, P30,
+                                            P4, P40, P50, P6, P60, P70, P80 and this is only
+                                            applicable to page blobs on premium storage accounts;
+                                            For block blob, possible values are Archive, Cold, Cool,
+                                            and Hot. This is only applicable to block blobs on
+                                            standard storage accounts.
+    --timeout                             : Request timeout in seconds. Applies to each call to the
+                                            service.
+
+Copy Source Arguments
+    --source-account-key                  : The storage account key of the source blob.
+    --source-account-name                 : The storage account name of the source blob.
+    --source-blob                         : The blob name for the source storage account.
+    --source-container                    : The container name for the source storage account.
+    --source-lease-id                     : Specify this to perform the Copy Blob operation only if
+                                            the lease ID given matches the active lease ID of the
+                                            source blob.
+    --source-path                         : The file path for the source storage account.
+    --source-sas                          : The shared access signature for the source storage
+                                            account.
+    --source-share                        : The share name for the source storage account.
+    --source-snapshot                     : The blob snapshot for the source storage account.
+    --source-uri -u                       : A URL of up to 2 KB in length that specifies an Azure
+                                            file or blob. The value should be URL-encoded as it
+                                            would appear in a request URI. If the source is in
+                                            another account, the source must either be public or
+                                            must be authenticated via a shared access signature. If
+                                            the source is public, no authentication is required.
+                                            Examples: `https://myaccount.blob.core.windows.net/mycon
+                                            tainer/myblob`, `https://myaccount.blob.core.windows.net
+                                            /mycontainer/myblob?snapshot=<DateTime>`, `https://other
+                                            account.blob.core.windows.net/mycontainer/myblob?sastoke
+                                            n`.
+
+Global Policy Arguments
+    --acquire-policy-token                : Acquiring an Azure Policy token automatically for this
+                                            resource operation.
+    --change-reference                    : The related change reference ID for this resource
+                                            operation.
+
+Pre-condition Arguments
+    --source-if-match                     : An ETag value, or the wildcard character (*). Specify
+                                            this header to perform the operation only if the
+                                            resource's ETag matches the value specified.
+    --source-if-modified-since            : A DateTime value. Azure expects the date value passed in
+                                            to be UTC. If timezone is included, any non-UTC
+                                            datetimes will be converted to UTC. If a date is passed
+                                            in without timezone info, it is assumed to be UTC.
+                                            Specify this conditional header to copy the blob only if
+                                            the source blob has been modified since the specified
+                                            date/time.
+    --source-if-none-match                : An ETag value, or the wildcard character (*). Specify
+                                            this header to perform the operation only if the
+                                            resource's ETag does not match the value specified.
+                                            Specify the wildcard character (*) to perform the
+                                            operation only if the resource does not exist, and fail
+                                            the operation if it does exist.
+    --source-if-unmodified-since          : A DateTime value. Azure expects the date value passed in
+                                            to be UTC. If timezone is included, any non-UTC
+                                            datetimes will be converted to UTC. If a date is passed
+                                            in without timezone info, it is assumed to be UTC.
+                                            Specify this conditional header to copy the blob only if
+                                            the source blob has not been modified since the
+                                            specified date/time.
+
+Precondition Arguments
+    --destination-if-match                : An ETag value, or the wildcard character (*). Specify
+                                            this header to perform the operation only if the
+                                            resource's ETag matches the value specified.
+    --destination-if-modified-since       : A DateTime value. Azure expects the date value passed in
+                                            to be UTC. If timezone is included, any non-UTC
+                                            datetimes will be converted to UTC. If a date is passed
+                                            in without timezone info, it is assumed to be UTC.
+                                            Specify this conditional header to copy the blob only if
+                                            the destination blob has been modified since the
+                                            specified date/time. If the destination blob has not
+                                            been modified, the Blob service returns status code 412
+                                            (Precondition Failed).
+    --destination-if-none-match           : An ETag value, or the wildcard character (*). Specify
+                                            this header to perform the operation only if the
+                                            resource's ETag does not match the value specified.
+                                            Specify the wildcard character (*) to perform the
+                                            operation only if the resource does not exist, and fail
+                                            the operation if it does exist.
+    --destination-if-unmodified-since     : A DateTime value. Azure expects the date value passed in
+                                            to be UTC. If timezone is included, any non-UTC
+                                            datetimes will be converted to UTC. If a date is passed
+                                            in without timezone info, it is assumed to be UTC.
+                                            Specify this conditional header to copy the blob only if
+                                            the destination blob has not been modified since the
+                                            specified date/time. If the destination blob has been
+                                            modified, the Blob service returns status code 412
+                                            (Precondition Failed).
+    --destination-tags-condition          : Specify a SQL where clause on blob tags to operate only
+                                            on blobs with a matching value.
+    --source-tags-condition               : Specify a SQL where clause on blob tags to operate only
+                                            on blobs with a matching value.
+
+Storage Account Arguments
+    --account-key                         : Storage account key. Must be used in conjunction with
+                                            storage account name or service endpoint. Environment
+                                            variable: AZURE_STORAGE_KEY.
+    --account-name                        : Storage account name. Related environment variable:
+                                            AZURE_STORAGE_ACCOUNT. Must be used in conjunction with
+                                            either storage account key or a SAS token. If neither
+                                            are present, the command will try to query the storage
+                                            account key using the authenticated Azure account. If a
+                                            large number of storage commands are executed the API
+                                            quota may be hit.
+    --blob-endpoint                       : Storage data service endpoint. Must be used in
+                                            conjunction with either storage account key or a SAS
+                                            token. You can find each service primary endpoint with
+                                            `az storage account show`. Environment variable:
+                                            AZURE_STORAGE_SERVICE_ENDPOINT.
+    --connection-string                   : Storage account connection string. Environment variable:
+                                            AZURE_STORAGE_CONNECTION_STRING.
+    --sas-token                           : A Shared Access Signature (SAS). Must be used in
+                                            conjunction with storage account name or service
+                                            endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.
+
+Global Arguments
+    --debug                               : Increase logging verbosity to show all debug logs.
+    --help -h                             : Show this help message and exit.
+    --only-show-errors                    : Only show errors, suppressing warnings.
+    --output -o                           : Output format.  Allowed values: json, jsonc, none,
+                                            table, tsv, yaml, yamlc.  Default: json.
+    --query                               : JMESPath query string. See http://jmespath.org/ for more
+                                            information and examples.
+    --subscription                        : Name or ID of subscription. You can configure the
+                                            default subscription using `az account set -s
+                                            NAME_OR_ID`.
+    --verbose                             : Increase logging verbosity. Use --debug for full debug
+                                            logs.
+
+Examples
+    Copy a blob asynchronously. Use `az storage blob show` to check the status of the blobs.
+        az storage blob copy start --account-key 00000000 --account-name MyAccount --destination-
+        blob MyDestinationBlob --destination-container MyDestinationContainer --source-uri
+        https://storage.blob.core.windows.net/photos
+
+
+    Copy a blob asynchronously. Use `az storage blob show` to check the status of the blobs.
+        az storage blob copy start --account-name MyAccount --destination-blob MyDestinationBlob
+        --destination-container MyDestinationContainer --sas-token $sas --source-uri
+        https://storage.blob.core.windows.net/photos
+
+
+    Copy a blob specific version
+        az storage blob copy start --account-name MyAccount --destination-blob MyDestinationBlob
+        --destination-container MyDestinationContainer --source-uri https://my-
+        account.blob.core.windows.net/my-container/my-blob?versionId=2022-03-21T18:28:44.4431011Z
+        --auth-mode login
+
+

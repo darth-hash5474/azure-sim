@@ -1,0 +1,261 @@
+# Commands the labs recognise. One per line; groups are derived. Regenerate with scripts/generate.sh.
+# Kept to what the five labs use plus the AZ-104 skills outline.
+
+# --- identity and governance ---
+login
+account show
+account list
+account set
+account list-locations
+ad user list
+ad user show
+ad user create
+ad group list
+ad group show
+ad group create
+ad group member add
+ad group member list
+role assignment list
+role assignment create
+role assignment delete
+role definition list
+role definition show
+policy definition list
+policy definition show
+policy assignment create
+policy assignment list
+policy assignment delete
+group list
+group show
+group create
+group update
+group delete
+group exists
+resource list
+resource show
+resource tag
+resource move
+resource delete
+tag list
+tag create
+tag update
+lock create
+lock list
+lock show
+lock delete
+
+# --- storage ---
+storage account create
+storage account list
+storage account show
+storage account update
+storage account delete
+storage account show-connection-string
+storage account failover
+storage account keys list
+storage account keys renew
+storage account generate-sas
+storage account revoke-delegation-keys
+storage account network-rule add
+storage account network-rule remove
+storage account network-rule list
+storage account management-policy create
+storage account management-policy show
+storage account management-policy update
+storage account management-policy delete
+storage account blob-service-properties show
+storage account blob-service-properties update
+storage container create
+storage container list
+storage container show
+storage container delete
+storage container restore
+storage container generate-sas
+storage container policy create
+storage container policy list
+storage container policy show
+storage container policy update
+storage container policy delete
+storage blob upload
+storage blob download
+storage blob list
+storage blob show
+storage blob delete
+storage blob undelete
+storage blob set-tier
+storage blob generate-sas
+storage blob copy start
+storage share create
+storage share list
+storage share-rm create
+storage share-rm update
+storage share-rm show
+storage share-rm list
+storage share-rm delete
+storage file upload
+storage file list
+
+# --- compute ---
+vm create
+vm list
+vm show
+vm start
+vm stop
+vm deallocate
+vm restart
+vm resize
+vm delete
+vm list-sizes
+vm list-skus
+vm open-port
+vm disk attach
+vm disk detach
+vm extension set
+vm extension list
+vm availability-set create
+vm availability-set list
+vmss create
+vmss list
+vmss show
+vmss scale
+disk create
+disk list
+disk show
+disk update
+appservice plan create
+appservice plan list
+appservice plan show
+appservice plan update
+appservice plan delete
+webapp create
+webapp list
+webapp show
+webapp delete
+webapp start
+webapp stop
+webapp restart
+webapp deploy
+webapp config appsettings set
+webapp config appsettings list
+webapp config appsettings delete
+webapp deployment slot create
+webapp deployment slot list
+webapp deployment slot swap
+webapp deployment slot delete
+functionapp config appsettings set
+functionapp config appsettings list
+container create
+container show
+container list
+container delete
+container logs
+acr create
+acr list
+deployment group create
+deployment group what-if
+deployment group validate
+deployment group list
+deployment group show
+bicep build
+
+# --- networking ---
+network vnet create
+network vnet list
+network vnet show
+network vnet delete
+network vnet subnet create
+network vnet subnet list
+network vnet subnet show
+network vnet subnet update
+network vnet subnet delete
+network vnet peering create
+network vnet peering list
+network vnet peering show
+network vnet peering update
+network vnet peering delete
+network nsg create
+network nsg list
+network nsg show
+network nsg delete
+network nsg rule create
+network nsg rule list
+network nsg rule show
+network nsg rule update
+network nsg rule delete
+network nic create
+network nic list
+network nic show
+network nic update
+network nic show-effective-route-table
+network nic list-effective-nsg
+network public-ip create
+network public-ip list
+network public-ip show
+network public-ip delete
+network route-table create
+network route-table list
+network route-table show
+network route-table delete
+network route-table route create
+network route-table route list
+network route-table route show
+network route-table route update
+network route-table route delete
+network watcher show-next-hop
+network watcher test-ip-flow
+network watcher test-connectivity
+network watcher flow-log create
+network lb create
+network lb list
+network lb show
+network lb rule create
+network lb probe create
+network dns zone create
+network dns zone list
+network dns record-set a add-record
+network private-dns zone create
+network private-dns link vnet create
+network private-endpoint create
+
+# --- monitoring and maintenance ---
+monitor metrics list
+monitor metrics list-definitions
+monitor metrics alert create
+monitor metrics alert list
+monitor metrics alert show
+monitor metrics alert update
+monitor metrics alert delete
+monitor action-group create
+monitor action-group list
+monitor action-group show
+monitor action-group delete
+monitor activity-log list
+monitor diagnostic-settings create
+monitor diagnostic-settings list
+monitor diagnostic-settings delete
+monitor log-analytics workspace create
+monitor log-analytics workspace list
+monitor log-analytics workspace show
+monitor log-analytics query
+monitor data-collection rule association create
+monitor alert-processing-rule create
+monitor alert-processing-rule list
+monitor alert-processing-rule delete
+backup vault create
+backup vault list
+backup vault show
+backup vault delete
+backup policy list
+backup policy show
+backup protection enable-for-vm
+backup protection backup-now
+backup protection disable
+backup job list
+backup job show
+backup recoverypoint list
+backup restore restore-disks
+backup item list
+backup container list
+
+# --- raw ARM ---
+rest

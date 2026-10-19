@@ -1,0 +1,74 @@
+
+Command
+    az role assignment create : Create a new role assignment for a user, group, or service
+    principal.
+
+Arguments
+    --role             [Required] : Role name or id.
+    --scope            [Required] : Scope at which the role assignment or definition applies to,
+                                    e.g., /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333,
+                                    /subscriptions/0b1f6471-1bf0-4dda-
+                                    aec3-111122223333/resourceGroups/myGroup, or
+                                    /subscriptions/0b1f6471-1bf0-4dda-aec3-
+                                    111122223333/resourceGroups/myGroup/providers/Microsoft.Compute/
+                                    virtualMachines/myVM.
+    --assignee                    : Represent a user, group, or service principal. supported format:
+                                    object id, user sign-in name, or service principal name.
+    --assignee-object-id          : The assignee's object ID (also known as principal ID). Use this
+                                    argument instead of '--assignee' to bypass Microsoft Graph query
+                                    in case the logged-in account has no permission or the machine
+                                    has no network access to query Microsoft Graph.
+    --assignee-principal-type     : Use with --assignee-object-id to avoid errors caused by
+                                    propagation latency in Microsoft Graph.  Allowed values:
+                                    ForeignGroup, Group, ServicePrincipal, User.
+    --condition         [Preview] : Condition under which the user can be granted permission.
+        WARNING: Argument '--condition' is in preview and under development. Reference and support
+        levels: https://aka.ms/CLI_refstatus
+    --condition-version [Preview] : Version of the condition syntax. If --condition is specified
+                                    without --condition-version, default to 2.0.
+        WARNING: Argument '--condition-version' is in preview and under development. Reference and
+        support levels: https://aka.ms/CLI_refstatus
+    --description       [Preview] : Description of role assignment.
+        WARNING: Argument '--description' is in preview and under development. Reference and support
+        levels: https://aka.ms/CLI_refstatus
+    --name -n                     : A GUID for the role assignment. It must be unique and different
+                                    for each role assignment. If omitted, a new GUID is generated.
+
+Global Policy Arguments
+    --acquire-policy-token        : Acquiring an Azure Policy token automatically for this resource
+                                    operation.
+    --change-reference            : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                       : Increase logging verbosity to show all debug logs.
+    --help -h                     : Show this help message and exit.
+    --only-show-errors            : Only show errors, suppressing warnings.
+    --output -o                   : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                    yaml, yamlc.  Default: json.
+    --query                       : JMESPath query string. See http://jmespath.org/ for more
+                                    information and examples.
+    --subscription                : Name or ID of subscription. You can configure the default
+                                    subscription using `az account set -s NAME_OR_ID`.
+    --verbose                     : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Create role assignment to grant the specified assignee the Reader role on an Azure virtual
+    machine.
+        az role assignment create --assignee sp_name --role Reader --scope /subscriptions/00000000-
+        0000-0000-0000-
+        000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyVm
+
+    Create role assignment for an assignee with description and condition.
+        az role assignment create --role Owner --scope /subscriptions/00000000-0000-0000-0000-
+        000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Storage/storageAccounts/MySt
+        orageAccount --assignee "John.Doe@Contoso.com" --description "Role assignment foo to check
+        on bar" --condition
+        "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:Name] stringEquals
+        'foo'" --condition-version "2.0"
+
+    Create role assignment with your own assignment name.
+        az role assignment create --assignee-object-id 00000000-0000-0000-0000-000000000000
+        --assignee-principal-type ServicePrincipal --role Reader --scope
+        /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup --name
+        00000000-0000-0000-0000-000000000000
+

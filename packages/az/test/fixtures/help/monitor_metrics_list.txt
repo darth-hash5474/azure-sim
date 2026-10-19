@@ -1,0 +1,98 @@
+
+Command
+    az monitor metrics list : List the metric values for a resource.
+
+Arguments
+    --aggregation         : The list of aggregation types (space-separated) to retrieve.  Allowed
+                            values: Average, Count, Maximum, Minimum, None, Total.  Values from: az
+                            monitor metrics list-definitions.
+    --dimension           : The list of dimensions (space-separated) the metrics are queried into.
+                            Values from: az monitor metrics list-definitions.
+    --filter              : A string used to reduce the set of metric data returned. eg. "BlobType
+                            eq '*'".
+        For a full list of filters, see the filter string reference at
+        https://learn.microsoft.com/rest/api/monitor/metrics/list.
+    --metadata            : Returns the metadata values instead of metric data.
+    --metrics             : Space-separated list of metric names to retrieve.  Values from: az
+                            monitor metrics list-definitions.
+    --namespace           : Namespace to query metric definitions for.  Values from: az monitor
+                            metrics list-namespaces.
+    --orderby             : Aggregation to use for sorting results and the direction of the sort.
+                            Only one order can be specificed. Examples: sum asc.
+    --top                 : Max number of records to retrieve.  Default: 10.
+
+Target Resource Arguments
+    --resource [Required] : Name or ID of the target resource.
+    --resource-group -g   : Name of resource group. You can configure the default group using `az
+                            configure --defaults group=<name>`.
+    --resource-namespace  : Target resource provider namespace.
+    --resource-parent     : Target resource parent path, if applicable.
+    --resource-type       : Target resource type. Can also accept namespace/type format (Ex:
+                            'Microsoft.Compute/virtualMachines').
+
+Time Arguments
+    --end-time            : End time of the query. Defaults to the current time. Format: date (yyyy-
+                            mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).
+    --interval            : The interval over which to aggregate metrics, in ##h##m format.
+                            Default: 1m.
+    --offset              : Time offset of the query range, in ##d##h format.  Default: 1h.
+        Can be used with either --start-time or --end-time. If used with --start-time, then the end
+        time will be calculated by adding the offset. If used with --end-time (default), then the
+        start time will be calculated by subtracting the offset. If --start-time and --end-time are
+        provided, then --offset will be ignored.
+    --start-time          : Start time of the query. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx)
+                            timezone (+/-hh:mm).
+
+Global Arguments
+    --debug               : Increase logging verbosity to show all debug logs.
+    --help -h             : Show this help message and exit.
+    --only-show-errors    : Only show errors, suppressing warnings.
+    --output -o           : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                            yamlc.  Default: json.
+    --query               : JMESPath query string. See http://jmespath.org/ for more information and
+                            examples.
+    --subscription        : Name or ID of subscription. You can configure the default subscription
+                            using `az account set -s NAME_OR_ID`.
+    --verbose             : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    List a VM's CPU usage for the past hour
+        az monitor metrics list --resource {ResourceName} --metric "Percentage CPU"
+
+
+    List success E2E latency of a storage account and split the data series based on API name
+        az monitor metrics list --resource {ResourceName} --metric SuccessE2ELatency \
+                                --dimension ApiName
+
+
+    List success E2E latency of a storage account and split the data series based on both API name
+    and geo type
+        az monitor metrics list --resource {ResourceName} --metric SuccessE2ELatency \
+                                --dimension ApiName GeoType
+
+
+    List success E2E latency of a storage account and split the data series based on both API name
+    and geo type using "--filter" parameter
+        az monitor metrics list --resource {ResourceName} --metric SuccessE2ELatency \
+                                --filter "ApiName eq '*' and GeoType eq '*'"
+
+
+    List success E2E latency of a storage account and split the data series based on both API name
+    and geo type. Limits the api name to 'DeleteContainer'
+        az monitor metrics list --resource {ResourceName} --metric SuccessE2ELatency \
+                                --filter "ApiName eq 'DeleteContainer' and GeoType eq '*'"
+
+
+    List transactions of a storage account per day since 2017-01-01
+        az monitor metrics list --resource {ResourceName} --metric Transactions \
+                                --start-time 2017-01-01T00:00:00Z \
+                                --interval PT24H
+
+
+    List the metadata values for a storage account under transaction metric's api name dimension
+    since 2017
+        az monitor metrics list --resource {ResourceName} --metric Transactions \
+                                --filter "ApiName eq '*'" \
+                                --start-time 2017-01-01T00:00:00Z
+
+

@@ -1,0 +1,106 @@
+
+Command
+    az storage blob download : Download a blob to a file path.
+
+Arguments
+    --auth-mode            : The mode in which to run the command. "login" mode will directly use
+                             your login credentials for the authentication. The legacy "key" mode
+                             will attempt to query for an account key if no authentication
+                             parameters for the account are provided. Environment variable:
+                             AZURE_STORAGE_AUTH_MODE.  Allowed values: key, login.
+    --blob-url             : The full endpoint URL to the Blob, including SAS token and snapshot if
+                             used. This could be either the primary endpoint, or the secondary
+                             endpoint depending on the current `location_mode`.
+    --container-name -c    : The container name.
+    --end-range            : End of byte range to use for downloading a section of the blob. If
+                             end_range is given, start_range must be provided. The start_range and
+                             end_range params are inclusive. Ex: start_range=0, end_range=511 will
+                             download first 512 bytes of blob.
+    --file -f              : Path of file to write out to. If not specified, stdout will be used and
+                             max_connections will be set to 1.
+    --lease-id             : Required if the blob has an active lease.
+    --max-connections      : The number of parallel connections with which to download.  Default: 2.
+    --name -n              : The blob name.
+    --no-progress          : Include this flag to disable progress reporting for the command.
+    --open-mode            : Mode to use when opening the file. Note that specifying append only
+                             open_mode prevents parallel download. So, max_connections must be set
+                             to 1 if this open_mode is used.  Default: wb.
+    --overwrite            : Overwrite an existing file when specified. Default value is true.
+                             Allowed values: false, true.  Default: True.
+    --snapshot             : The snapshot parameter is an opaque DateTime value that, when present,
+                             specifies the blob snapshot to retrieve.
+    --start-range          : Start of byte range to use for downloading a section of the blob. If no
+                             end_range is given, all bytes after the start_range will be downloaded.
+                             The start_range and end_range params are inclusive. Ex: start_range=0,
+                             end_range=511 will download first 512 bytes of blob.
+    --timeout              : Request timeout in seconds. Applies to each call to the service.
+    --validate-content     : If true, calculates an MD5 hash for each chunk of the blob. The storage
+                             service checks the hash of the content that has arrived with the hash
+                             that was sent. This is primarily valuable for detecting bitflips on the
+                             wire if using http instead of https, as https (the default), will
+                             already validate. Note that this MD5 hash is not stored with the blob.
+                             Also note that if enabled, the memory-efficient algorithm will not be
+                             used because computing the MD5 hash requires buffering entire blocks,
+                             and doing so defeats the purpose of the memory-efficient algorithm.
+    --version-id           : An optional blob version ID. This parameter is only for versioning
+                             enabled account.
+
+Global Policy Arguments
+    --acquire-policy-token : Acquiring an Azure Policy token automatically for this resource
+                             operation.
+    --change-reference     : The related change reference ID for this resource operation.
+
+Precondition Arguments
+    --if-match             : An ETag value, or the wildcard character (*). Specify this header to
+                             perform the operation only if the resource's ETag matches the value
+                             specified.
+    --if-modified-since    : Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    --if-none-match        : An ETag value, or the wildcard character (*). Specify this header to
+                             perform the operation only if the resource's ETag does not match the
+                             value specified. Specify the wildcard character (*) to perform the
+                             operation only if the resource does not exist, and fail the operation
+                             if it does exist.
+    --if-unmodified-since  : Commence only if unmodified since supplied UTC datetime
+                             (Y-m-d'T'H:M'Z').
+    --tags-condition       : Specify a SQL where clause on blob tags to operate only on blobs with a
+                             matching value.
+
+Storage Account Arguments
+    --account-key          : Storage account key. Must be used in conjunction with storage account
+                             name or service endpoint. Environment variable: AZURE_STORAGE_KEY.
+    --account-name         : Storage account name. Related environment variable:
+                             AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage
+                             account key or a SAS token. If neither are present, the command will
+                             try to query the storage account key using the authenticated Azure
+                             account. If a large number of storage commands are executed the API
+                             quota may be hit.
+    --blob-endpoint        : Storage data service endpoint. Must be used in conjunction with either
+                             storage account key or a SAS token. You can find each service primary
+                             endpoint with `az storage account show`. Environment variable:
+                             AZURE_STORAGE_SERVICE_ENDPOINT.
+    --connection-string    : Storage account connection string. Environment variable:
+                             AZURE_STORAGE_CONNECTION_STRING.
+    --sas-token            : A Shared Access Signature (SAS). Must be used in conjunction with
+                             storage account name or service endpoint. Environment variable:
+                             AZURE_STORAGE_SAS_TOKEN.
+
+Global Arguments
+    --debug                : Increase logging verbosity to show all debug logs.
+    --help -h              : Show this help message and exit.
+    --only-show-errors     : Only show errors, suppressing warnings.
+    --output -o            : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                             yamlc.  Default: json.
+    --query                : JMESPath query string. See http://jmespath.org/ for more information
+                             and examples.
+    --subscription         : Name or ID of subscription. You can configure the default subscription
+                             using `az account set -s NAME_OR_ID`.
+    --verbose              : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Download a blob.
+        az storage blob download -f /path/to/file -c mycontainer -n MyBlob
+
+    Download a blob content to stdout(pipe support).
+        az storage blob download -c mycontainer -n myblob --account-name mystorageaccount --account-
+        key myaccountkey
+

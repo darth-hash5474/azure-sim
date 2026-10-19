@@ -1,0 +1,62 @@
+
+Command
+    az network vnet peering create : Create a virtual network peering connection.
+        To successfully peer two virtual networks this command must be called twice with the values
+        for --vnet-name and --remote-vnet reversed.
+
+Arguments
+    --name -n           [Required] : The name of the VNet peering.
+    --remote-vnet       [Required] : Name or ID of the remote VNet.
+    --resource-group -g [Required] : Name of resource group. You can configure the default group
+                                     using `az configure --defaults group=<name>`.
+    --vnet-name         [Required] : The virtual network (VNet) name.
+    --allow-forwarded-traffic      : Whether the forwarded traffic from the VMs in the local virtual
+                                     network will be allowed/disallowed in remote virtual network.
+                                     Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --allow-gateway-transit        : If gateway links can be used in remote virtual networking to
+                                     link to this virtual network.  Allowed values: 0, 1, f, false,
+                                     n, no, t, true, y, yes.
+    --allow-vnet-access            : Whether the VMs in the local virtual network space would be
+                                     able to access the VMs in remote virtual network space.
+                                     Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --enable-only-ipv6             : Whether only Ipv6 address space is peered for subnet peering.
+                                     Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --local-subnet-names           : List of local subnet names that are subnet peered with remote
+                                     virtual network.  Support shorthand-syntax, json-file and yaml-
+                                     file. Try "??" to show more.
+    --no-wait                      : Do not wait for the long-running operation to finish.  Allowed
+                                     values: 0, 1, f, false, n, no, t, true, y, yes.
+    --peer-complete-vnets          : Whether complete virtual network address space is peered.
+                                     Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+                                     Default: True.
+    --remote-subnet-names          : List of remote subnet names from remote virtual network that
+                                     are subnet peered.  Support shorthand-syntax, json-file and
+                                     yaml-file. Try "??" to show more.
+    --use-remote-gateways          : Allows VNet to use the remote VNet's gateway. Remote VNet
+                                     gateway must have --allow-gateway-transit enabled for remote
+                                     peering. Only 1 peering can have this flag enabled. Cannot be
+                                     set if the VNet already has a gateway.  Allowed values: 0, 1,
+                                     f, false, n, no, t, true, y, yes.
+
+Global Policy Arguments
+    --acquire-policy-token         : Acquiring an Azure Policy token automatically for this resource
+                                     operation.
+    --change-reference             : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                        : Increase logging verbosity to show all debug logs.
+    --help -h                      : Show this help message and exit.
+    --only-show-errors             : Only show errors, suppressing warnings.
+    --output -o                    : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                     yaml, yamlc.  Default: json.
+    --query                        : JMESPath query string. See http://jmespath.org/ for more
+                                     information and examples.
+    --subscription                 : Name or ID of subscription. You can configure the default
+                                     subscription using `az account set -s NAME_OR_ID`.
+    --verbose                      : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Create a peering connection between two virtual networks.
+        az network vnet peering create -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
+        --remote-vnet MyVnet2Id --allow-vnet-access
+

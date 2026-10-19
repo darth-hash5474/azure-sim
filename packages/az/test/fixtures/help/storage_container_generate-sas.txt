@@ -1,0 +1,108 @@
+
+Command
+    az storage container generate-sas : Generate a SAS token for a storage container.
+
+Arguments
+    --name -n            [Required] : The container name.
+    --as-user                       : Indicates that this command return the SAS signed with the
+                                      user delegation key. The expiry parameter and '--auth-mode
+                                      login' are required if this argument is specified.
+    --auth-mode                     : The mode in which to run the command. "login" mode will
+                                      directly use your login credentials for the authentication.
+                                      The legacy "key" mode will attempt to query for an account key
+                                      if no authentication parameters for the account are provided.
+                                      Environment variable: AZURE_STORAGE_AUTH_MODE.  Allowed
+                                      values: key, login.
+    --cache-control                 : Response header value for Cache-Control when resource is
+                                      accessed using this shared access signature.
+    --content-disposition           : Response header value for Content-Disposition when resource is
+                                      accessed using this shared access signature.
+    --content-encoding              : Response header value for Content-Encoding when resource is
+                                      accessed using this shared access signature.
+    --content-language              : Response header value for Content-Language when resource is
+                                      accessed using this shared access signature.
+    --content-type                  : Response header value for Content-Type when resource is
+                                      accessed using this shared access signature.
+    --encryption-scope              : A predefined encryption scope used to encrypt the data on the
+                                      service.
+    --expiry                        : Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS
+                                      becomes invalid. Do not use if a stored access policy is
+                                      referenced with --policy-name that specifies this value.
+    --https-only                    : Only permit requests made with the HTTPS protocol. If omitted,
+                                      requests from both the HTTP and HTTPS protocol are permitted.
+    --ip                            : Specifies the IP address or range of IP addresses from which
+                                      to accept requests. Supports only IPv4 style addresses.
+    --permissions                   : The permissions the SAS grants. Allowed values: (a)dd (c)reate
+                                      (d)elete (e)xecute (f)ilter_by_tags (i)set_immutability_policy
+                                      (l)ist (m)ove (r)ead (t)ag (w)rite (x)delete_previous_version
+                                      (y)permanent_delete. Do not use if a stored access policy is
+                                      referenced with --id that specifies this value. Can be
+                                      combined.
+    --policy-name                   : The name of a stored access policy within the container's ACL.
+    --start                         : Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS
+                                      becomes valid. Do not use if a stored access policy is
+                                      referenced with --policy-name that specifies this value.
+                                      Defaults to the time of the request.
+    --user-delegation-oid [Preview] : Specifies the Entra ID of the user that is authorized to use
+                                      the resulting SAS URL. The resulting SAS URL must be used in
+                                      conjunction with an Entra ID token that has been issued to the
+                                      user specified in this value.
+        WARNING: Argument '--user-delegation-oid' is in preview and under development. Reference and
+        support levels: https://aka.ms/CLI_refstatus
+    --user-delegation-tid [Preview] : The delegated user tenant id in Azure AD. This parameter can
+                                      only be specified when using OAuth.
+        WARNING: Argument '--user-delegation-tid' is in preview and under development. Reference and
+        support levels: https://aka.ms/CLI_refstatus
+
+Global Policy Arguments
+    --acquire-policy-token          : Acquiring an Azure Policy token automatically for this
+                                      resource operation.
+    --change-reference              : The related change reference ID for this resource operation.
+
+Storage Account Arguments
+    --account-key                   : Storage account key. Must be used in conjunction with storage
+                                      account name or service endpoint. Environment variable:
+                                      AZURE_STORAGE_KEY.
+    --account-name                  : Storage account name. Related environment variable:
+                                      AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either
+                                      storage account key or a SAS token. If neither are present,
+                                      the command will try to query the storage account key using
+                                      the authenticated Azure account. If a large number of storage
+                                      commands are executed the API quota may be hit.
+    --blob-endpoint                 : Storage data service endpoint. Must be used in conjunction
+                                      with either storage account key or a SAS token. You can find
+                                      each service primary endpoint with `az storage account show`.
+                                      Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.
+    --connection-string             : Storage account connection string. Environment variable:
+                                      AZURE_STORAGE_CONNECTION_STRING.
+
+Global Arguments
+    --debug                         : Increase logging verbosity to show all debug logs.
+    --help -h                       : Show this help message and exit.
+    --only-show-errors              : Only show errors, suppressing warnings.
+    --output -o                     : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                      yaml, yamlc.  Default: json.
+    --query                         : JMESPath query string. See http://jmespath.org/ for more
+                                      information and examples.
+    --subscription                  : Name or ID of subscription. You can configure the default
+                                      subscription using `az account set -s NAME_OR_ID`.
+    --verbose                       : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Generate a sas token for blob container and use it to upload a blob.
+        end=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+        sas=`az storage container generate-sas -n mycontainer --https-only --permissions dlrw
+        --expiry $end -o tsv`
+        az storage blob upload -n MyBlob -c mycontainer -f file.txt --sas-token $sas
+
+
+    Generate a shared access signature for the container (autogenerated)
+        az storage container generate-sas --account-key 00000000 --account-name mystorageaccount
+        --expiry 2020-01-01 --name mycontainer --permissions dlrw
+
+
+    Generate a SAS token for a storage container. (autogenerated)
+        az storage container generate-sas --account-name mystorageaccount --as-user --auth-mode
+        login --expiry 2020-01-01 --name container1 --permissions dlrw
+
+

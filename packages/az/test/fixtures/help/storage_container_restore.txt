@@ -1,0 +1,60 @@
+
+Command
+    az storage container restore : Restore soft-deleted container.
+        Operation will only be successful if used within the specified number of days set in the
+        delete retention policy.
+
+Arguments
+    --deleted-version [Required] : Specify the version of the deleted container to restore.
+    --name -n         [Required] : Specify the name of the deleted container to restore.
+    --auth-mode                  : The mode in which to run the command. "login" mode will directly
+                                   use your login credentials for the authentication. The legacy
+                                   "key" mode will attempt to query for an account key if no
+                                   authentication parameters for the account are provided.
+                                   Environment variable: AZURE_STORAGE_AUTH_MODE.  Allowed values:
+                                   key, login.
+    --timeout                    : Request timeout in seconds. Applies to each call to the service.
+
+Global Policy Arguments
+    --acquire-policy-token       : Acquiring an Azure Policy token automatically for this resource
+                                   operation.
+    --change-reference           : The related change reference ID for this resource operation.
+
+Storage Account Arguments
+    --account-key                : Storage account key. Must be used in conjunction with storage
+                                   account name or service endpoint. Environment variable:
+                                   AZURE_STORAGE_KEY.
+    --account-name               : Storage account name. Related environment variable:
+                                   AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either
+                                   storage account key or a SAS token. If neither are present, the
+                                   command will try to query the storage account key using the
+                                   authenticated Azure account. If a large number of storage
+                                   commands are executed the API quota may be hit.
+    --blob-endpoint              : Storage data service endpoint. Must be used in conjunction with
+                                   either storage account key or a SAS token. You can find each
+                                   service primary endpoint with `az storage account show`.
+                                   Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.
+    --connection-string          : Storage account connection string. Environment variable:
+                                   AZURE_STORAGE_CONNECTION_STRING.
+    --sas-token                  : A Shared Access Signature (SAS). Must be used in conjunction with
+                                   storage account name or service endpoint. Environment variable:
+                                   AZURE_STORAGE_SAS_TOKEN.
+
+Global Arguments
+    --debug                      : Increase logging verbosity to show all debug logs.
+    --help -h                    : Show this help message and exit.
+    --only-show-errors           : Only show errors, suppressing warnings.
+    --output -o                  : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                   yaml, yamlc.  Default: json.
+    --query                      : JMESPath query string. See http://jmespath.org/ for more
+                                   information and examples.
+    --subscription               : Name or ID of subscription. You can configure the default
+                                   subscription using `az account set -s NAME_OR_ID`.
+    --verbose                    : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    List and restore soft-deleted container.
+        az storage container list --include-deleted
+        az storage container restore -n deletedcontainer --deleted-version deletedversion
+
+

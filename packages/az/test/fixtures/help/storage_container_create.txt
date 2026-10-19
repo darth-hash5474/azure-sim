@@ -1,0 +1,104 @@
+
+Command
+    az storage container create : Create a container in a storage account.
+        By default, container data is private ("off") to the account owner. Use "blob" to allow
+        public read access for blobs. Use "container" to allow public read and list access to the
+        entire container. You can configure the --public-access using `az storage container set-
+        permission -n CONTAINER_NAME --public-access blob/container/off`.
+
+Arguments
+    --name -n                             [Required] : The container name.
+    --auth-mode                                      : The mode in which to run the command. "login"
+                                                       mode will directly use your login credentials
+                                                       for the authentication. The legacy "key" mode
+                                                       will attempt to query for an account key if
+                                                       no authentication parameters for the account
+                                                       are provided. Environment variable:
+                                                       AZURE_STORAGE_AUTH_MODE.  Allowed values:
+                                                       key, login.
+    --fail-on-exist                                  : Throw an exception if the container already
+                                                       exists.
+    --metadata                                       : Metadata in space-separated key=value pairs.
+                                                       This overwrites any existing metadata.
+    --public-access                                  : Specifies whether data in the container may
+                                                       be accessed publicly.  Allowed values: blob,
+                                                       container, off.
+    --resource-group -g                 [Deprecated] : Name of resource group. You can configure the
+                                                       default group using `az configure --defaults
+                                                       group=<name>`.
+        WARNING: Argument 'resource_group_name' has been deprecated and will be removed in a future
+        release.
+    --timeout                                        : Request timeout in seconds. Applies to each
+                                                       call to the service.
+
+Encryption Policy Arguments
+    --default-encryption-scope -d          [Preview] : Default the container to use specified
+                                                       encryption scope for all writes.
+        WARNING: Argument '--default-encryption-scope' is in preview and under development.
+        Reference and support levels: https://aka.ms/CLI_refstatus
+    --prevent-encryption-scope-override -p [Preview] : Block override of encryption scope from the
+                                                       container default.  Allowed values: false,
+                                                       true.
+        WARNING: Argument '--prevent-encryption-scope-override' is in preview and under development.
+        Reference and support levels: https://aka.ms/CLI_refstatus
+
+Global Policy Arguments
+    --acquire-policy-token                           : Acquiring an Azure Policy token automatically
+                                                       for this resource operation.
+    --change-reference                               : The related change reference ID for this
+                                                       resource operation.
+
+Storage Account Arguments
+    --account-key                                    : Storage account key. Must be used in
+                                                       conjunction with storage account name or
+                                                       service endpoint. Environment variable:
+                                                       AZURE_STORAGE_KEY.
+    --account-name                                   : Storage account name. Related environment
+                                                       variable: AZURE_STORAGE_ACCOUNT.
+    --blob-endpoint                                  : Storage data service endpoint. Must be used
+                                                       in conjunction with either storage account
+                                                       key or a SAS token. You can find each service
+                                                       primary endpoint with `az storage account
+                                                       show`. Environment variable:
+                                                       AZURE_STORAGE_SERVICE_ENDPOINT.
+    --connection-string                              : Storage account connection string.
+                                                       Environment variable:
+                                                       AZURE_STORAGE_CONNECTION_STRING.
+    --sas-token                                      : A Shared Access Signature (SAS). Must be used
+                                                       in conjunction with storage account name or
+                                                       service endpoint. Environment variable:
+                                                       AZURE_STORAGE_SAS_TOKEN.
+
+Global Arguments
+    --debug                                          : Increase logging verbosity to show all debug
+                                                       logs.
+    --help -h                                        : Show this help message and exit.
+    --only-show-errors                               : Only show errors, suppressing warnings.
+    --output -o                                      : Output format.  Allowed values: json, jsonc,
+                                                       none, table, tsv, yaml, yamlc.  Default:
+                                                       json.
+    --query                                          : JMESPath query string. See
+                                                       http://jmespath.org/ for more information and
+                                                       examples.
+    --subscription                                   : Name or ID of subscription. You can configure
+                                                       the default subscription using `az account
+                                                       set -s NAME_OR_ID`.
+    --verbose                                        : Increase logging verbosity. Use --debug for
+                                                       full debug logs.
+
+Examples
+    Create a storage container in a storage account.
+        az storage container create -n mystoragecontainer
+
+    Create a storage container in a storage account and return an error if the container already
+    exists.
+        az storage container create -n mystoragecontainer --fail-on-exist
+
+    Create a storage container in a storage account and allow public read access for blobs.
+        az storage container create -n mystoragecontainer --public-access blob
+
+    Create a storage container in a PartitionedDNS enabled storage account.
+        az storage container create --account-name mystorageaccount --name mystoragecontainer
+        --account-key "enter-your-storage_account-key" --blob-endpoint
+        "https://mystorageaccount.z3.blob.storage.azure.net/"
+

@@ -1,0 +1,143 @@
+
+Command
+    az backup restore restore-disks : Restore disks of the backed VM from the specified recovery
+    point.
+        For a Cross Subscription Backup (CSB) protected item, pass the native container name and
+        item name (the 'name' field from 'az backup container list' and 'az backup item list')
+        instead of the friendly name. This is also required when two VMs with the same friendly name
+        but in different resource groups are protected in the same vault - passing the friendly name
+        in that case fails with a clear error.
+
+Arguments
+    --storage-account         [Required] : Name or ID of the staging storage account. The VM
+                                           configuration will be restored to this storage account.
+                                           See the help for --restore-to-staging-storage-account
+                                           parameter for more info. The ID might be needed for
+                                           cross-region restores where the storage account and vault
+                                           are not on the same resource group. In order to get the
+                                           ID, use the storage account show command as specified
+                                           here (https://learn.microsoft.com/en-
+                                           us/azure/storage/common/storage-account-get-
+                                           info?tabs=azure-cli#get-the-resource-id-for-a-storage-
+                                           account).
+    --cvm-os-des-id                      : Disk encryption set ID for the OS disk of confidential
+                                           VMs. This is used to encrypt the OS disk during restore.
+    --disk-access-option                 : Specify the disk access option for target disks.  Allowed
+                                           values: EnablePrivateAccessForAllDisks,
+                                           EnablePublicAccessForAllDisks, SameAsOnSourceDisks.
+    --disk-encryption-set-id             : The disk encryption set id is used for encrypting
+                                           restored disks. Please ensure access to disk encryption
+                                           set id that is specified here.
+    --diskslist                          : List of disks to be excluded or included.
+    --mi-system-assigned                 : Use this flag to specify whether a system-assigned
+                                           managed identity should be used for the restore
+                                           operation. MI option is not applicable for restoring
+                                           unmanaged disks.
+    --mi-user-assigned                   : ARM ID of the user-assigned managed identity to use for
+                                           the restore operation. Specify a value for this parameter
+                                           if you do not want to use a system-assigned MI for
+                                           restoring the backup item.
+    --rehydration-duration               : Set the maximum time, in days (between 10-30, both
+                                           inclusive) for which the recovery point stays in hydrated
+                                           state.  Default: 15.
+    --rehydration-priority               : The type of priority to be maintained while rehydrating a
+                                           recovery point.  Allowed values: High, Standard.
+    --restore-as-unmanaged-disks         : Use this flag to specify to restore as unmanaged disks.
+                                           Allowed values: false, true.
+    --restore-mode                       : Specify the restore mode.  Allowed values:
+                                           AlternateLocation, OriginalLocation.  Default:
+                                           AlternateLocation.
+    --restore-only-osdisk                : Use this flag to restore only OS disks of a backed up VM.
+                                           Allowed values: false, true.
+    --restore-to-edge-zone               : Switch parameter to indicate edge zone VM restore. This
+                                           parameter can't be used in cross region and cross
+                                           subscription restore scenarios.  Allowed values: false,
+                                           true.
+    --restore-to-staging-storage-account : Use this flag when you want disks to be restored to the
+                                           staging storage account using the --storage-account
+                                           parameter. When not specified, disks will be restored to
+                                           their original storage accounts. Default: false.  Allowed
+                                           values: false, true.
+    --storage-account-resource-group     : Name of the resource group which contains the storage
+                                           account. Default value will be same as --resource-group
+                                           if not specified.
+    --target-disk-access-id              : Specify the target disk access ID when --disk-access-
+                                           option is set to EnablePrivateAccessForAllDisks.
+    --target-resource-group -t           : Use this to specify the target resource group in which
+                                           the restored disks will be saved.
+    --target-subnet-name                 : Name of the subnet in which the target VM should be
+                                           created, in the case of Alternate Location restore a new
+                                           VM.
+    --target-subscription-id             : ID of the subscription to which the resource should be
+                                           restored.
+    --target-vm-name                     : Name of the VM to which the data should be restored, in
+                                           the case of Alternate Location restore to a new VM.
+    --target-vnet-name                   : Name of the VNet in which the target VM should be
+                                           created, in the case of Alternate Location restore to a
+                                           new VM.
+    --target-vnet-resource-group         : Name of the resource group which contains the target
+                                           VNet, in the case of Alternate Location restore to a new
+                                           VM.
+    --target-zone                        : A primary region currently can have three Azure
+                                           availability zones. Use this argument to specify the
+                                           target zone number while doing Cross Zonal Restore.
+                                           Allowed values: 1, 2, 3, NoZone.
+    --tenant-id                          : ID of the tenant if the Resource Guard protecting the
+                                           vault exists in a different tenant.
+    --use-secondary-region               : Use this flag to restore from a recoverypoint in
+                                           secondary region.
+
+Global Policy Arguments
+    --acquire-policy-token               : Acquiring an Azure Policy token automatically for this
+                                           resource operation.
+    --change-reference                   : The related change reference ID for this resource
+                                           operation.
+
+Resource Id Arguments
+    --container-name -c                  : Name of the backup container. Accepts 'Name' or
+                                           'FriendlyName' from the output of az backup container
+                                           list command. If 'FriendlyName' is passed then
+                                           BackupManagementType is required.
+    --ids                                : One or more resource IDs (space-delimited). It should be
+                                           a complete resource ID containing all information of
+                                           'Resource Id' arguments. You should provide either --ids
+                                           or other 'Resource Id' arguments.
+    --item-name -i                       : Name of the backed up item.
+    --resource-group -g                  : Name of resource group. You can configure the default
+                                           group using `az configure --defaults group=<name>`.
+    --rp-name -r                         : Name of the recovery point.
+    --subscription                       : Name or ID of subscription. You can configure the default
+                                           subscription using `az account set -s NAME_OR_ID`.
+    --vault-name -v                      : Name of the Recovery services vault.
+
+Global Arguments
+    --debug                              : Increase logging verbosity to show all debug logs.
+    --help -h                            : Show this help message and exit.
+    --only-show-errors                   : Only show errors, suppressing warnings.
+    --output -o                          : Output format.  Allowed values: json, jsonc, none, table,
+                                           tsv, yaml, yamlc.  Default: json.
+    --query                              : JMESPath query string. See http://jmespath.org/ for more
+                                           information and examples.
+    --verbose                            : Increase logging verbosity. Use --debug for full debug
+                                           logs.
+
+Examples
+    Restore disks of the backed VM from the specified recovery point. (autogenerated)
+        az backup restore restore-disks --container-name MyContainer --item-name MyItem --resource-
+        group MyResourceGroup --rp-name MyRp --storage-account mystorageaccount --vault-name MyVault
+
+    Restore disks of a Cross Subscription Backup protected VM to its original location (OLR). Use
+    OriginalLocation restore mode and pass native container and item names. No target subscription
+    is required - it is derived from the recovery point, and the staging storage account is resolved
+    in the VM's subscription.
+        az backup restore restore-disks \
+          --resource-group MyVaultResourceGroup \
+          --vault-name MyVault \
+          --container-name "IaasVMContainer;iaasvmcontainerv2;VMResourceGroup;MyVm" \
+          --item-name "VM;iaasvmcontainerv2;VMResourceGroup;MyVm" \
+          --rp-name MyRp \
+          --restore-mode OriginalLocation \
+          --storage-account mystorageaccount \
+          --storage-account-resource-group MyStorageAccountResourceGroup
+
+

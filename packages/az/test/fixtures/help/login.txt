@@ -1,0 +1,111 @@
+
+Command
+    az login : Log in to Azure.
+        By default, this command logs in with a user account. Azure CLI uses Web Account Manager
+        (WAM) on Windows, and browser-based login on Linux and macOS by default. If WAM or a web
+        browser is not available, Azure CLI will fall back to device code login.
+
+        [WARNING] Authentication with username and password in the command line is strongly
+        discouraged. Use one of the recommended authentication methods based on your requirements.
+        For more details, see https://go.microsoft.com/fwlink/?linkid=2276314
+
+        [WARNING] `--password` no longer accepts a service principal certificate. Use
+        `--certificate` to pass a service principal certificate.
+
+        To log in with a service principal, specify --service-principal.
+
+        To log in with a managed identity, specify --identity.
+
+        For more details, see https://learn.microsoft.com/cli/azure/authenticate-azure-cli.
+
+Arguments
+    --allow-no-subscriptions                 : Support accessing tenants without subscriptions. It's
+                                               useful to run tenant-level commands, such as 'az ad'.
+    --certificate                            : PEM file with key and public certificate.
+    --claims-challenge                       : Base64-encoded claims challenge requested by a
+                                               resource API in the WWW-Authenticate header.
+    --federated-token                        : Federated token that can be used for OIDC token
+                                               exchange.
+    --password -p                            : User password or service principal secret. Will
+                                               prompt if not given.
+    --scope                                  : Used in the /authorize request. It can cover only one
+                                               static resource.
+    --service-principal                      : Log in with a service principal.
+    --skip-sub --skip-subscription-discovery : Skip the subscription discovery process during login.
+                                               Requires --tenant. Use with --subscription to fetch a
+                                               single subscription without listing all.
+    --subscription -s                        : Subscription ID or name to set as the default. When
+                                               combined with --skip-subscription-discovery, only
+                                               this subscription is retrieved via a direct API call
+                                               (must be a subscription ID, not a name).
+    --tenant -t                              : The Microsoft Entra tenant, must be provided when
+                                               using a service principal.
+    --use-cert-sn-issuer                     : Use Subject Name + Issuer (SN+I) authentication in
+                                               order to support automatic certificate rolls.
+    --use-device-code                        : Use device code flow. Azure CLI will also use this if
+                                               it can't launch a browser, e.g. in remote SSH or
+                                               Cloud Shell.
+    --username -u                            : User name or service principal client ID.
+
+Global Policy Arguments
+    --acquire-policy-token                   : Acquiring an Azure Policy token automatically for
+                                               this resource operation.
+    --change-reference                       : The related change reference ID for this resource
+                                               operation.
+
+Managed Identity Arguments
+    --client-id                              : Client ID of the user-assigned managed identity.
+    --identity -i                            : Log in using managed identity.
+    --object-id                              : Object ID of the user-assigned managed identity.
+    --resource-id                            : Resource ID of the user-assigned managed identity.
+
+Global Arguments
+    --debug                                  : Increase logging verbosity to show all debug logs.
+    --help -h                                : Show this help message and exit.
+    --only-show-errors                       : Only show errors, suppressing warnings.
+    --output -o                              : Output format.  Allowed values: json, jsonc, none,
+                                               table, tsv, yaml, yamlc.  Default: json.
+    --query                                  : JMESPath query string. See http://jmespath.org/ for
+                                               more information and examples.
+    --verbose                                : Increase logging verbosity. Use --debug for full
+                                               debug logs.
+
+Examples
+    Log in interactively.
+        az login
+
+    Log in with username and password. This doesn't work with Microsoft accounts or accounts that
+    have two-factor authentication enabled. Use -p=secret if the first character of the password is
+    '-'.
+        az login --username johndoe@contoso.com --password VerySecret
+
+    Log in with a service principal using client secret. Use --password=secret if the first
+    character of the password is '-'.
+        az login --service-principal --username APP_ID --password CLIENT_SECRET --tenant TENANT_ID
+
+    Log in with a service principal using certificate.
+        az login --service-principal --username APP_ID --certificate /path/to/cert.pem --tenant
+        TENANT_ID
+
+    Log in with a system-assigned managed identity.
+        az login --identity
+
+    Log in with a user-assigned managed identity's client ID.
+        az login --identity --client-id 00000000-0000-0000-0000-000000000000
+
+    Log in with a user-assigned managed identity's resource ID.
+        az login --identity --resource-id /subscriptions/00000000-0000-0000-0000-
+        000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssigned
+        Identities/MyIdentity
+
+    Log in and skip subscription discovery, fetching only a single subscription (fastest for tenants
+    with many subscriptions).
+        az login --tenant TENANT_ID --skip-subscription-discovery --subscription SUBSCRIPTION_ID
+
+    Log in and skip subscription discovery entirely for tenant-level operations only (e.g., 'az
+    ad').
+        az login --tenant TENANT_ID --skip-subscription-discovery
+
+    Log in with full discovery but set a specific subscription as the default.
+        az login --subscription SUBSCRIPTION_ID
+

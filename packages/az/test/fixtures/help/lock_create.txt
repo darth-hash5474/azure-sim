@@ -1,0 +1,56 @@
+
+Command
+    az lock create : Create a lock.
+        Locks can exist at three different scopes: subscription, resource group and resource.
+        For how to add locks at different levels, please refer to the following examples.
+
+Arguments
+    --lock-type -t  [Required] : The type of lock restriction.  Allowed values: CanNotDelete,
+                                 ReadOnly.
+    --name -n       [Required] : Name of the lock.
+    --namespace                : Provider namespace (Ex: 'Microsoft.Provider').
+    --notes                    : Notes about this lock.
+    --parent                   : The parent path (Ex: 'resA/myA/resB/myB').
+    --resource --resource-name : Name or ID of the resource being locked. If an ID is given, other
+                                 resource arguments should not be given.
+    --resource-group -g        : Name of resource group. You can configure the default group using
+                                 `az configure --defaults group=<name>`.
+    --resource-type            : The resource type (Ex: 'resC'). Can also accept namespace/type
+                                 format (Ex: 'Microsoft.Provider/resC').
+
+Global Policy Arguments
+    --acquire-policy-token     : Acquiring an Azure Policy token automatically for this resource
+                                 operation.
+    --change-reference         : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                    : Increase logging verbosity to show all debug logs.
+    --help -h                  : Show this help message and exit.
+    --only-show-errors         : Only show errors, suppressing warnings.
+    --output -o                : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                 yaml, yamlc.  Default: json.
+    --query                    : JMESPath query string. See http://jmespath.org/ for more
+                                 information and examples.
+    --subscription             : Name or ID of subscription. You can configure the default
+                                 subscription using `az account set -s NAME_OR_ID`.
+    --verbose                  : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Create a read-only subscription level lock.
+        az lock create --name lockName --lock-type ReadOnly
+
+
+    Create a read-only resource group level lock.
+        az lock create --name lockName --resource-group group --lock-type ReadOnly
+
+
+    Create a read-only resource level lock on a vnet resource.
+        az lock create --name lockName --resource-group group --lock-type ReadOnly --resource-type \
+            Microsoft.Network/virtualNetworks --resource myVnet
+
+
+    Create a read-only resource level lock on a subnet resource with a specific parent.
+        az lock create --name lockName --resource-group group --lock-type ReadOnly --resource-type \
+            Microsoft.Network/subnets --parent virtualNetworks/myVnet --resource mySubnet
+
+

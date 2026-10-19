@@ -1,0 +1,128 @@
+
+Command
+    az network vnet create : Create a virtual network.
+        You may also create a subnet at the same time by specifying a subnet name and (optionally)
+        an address prefix. To learn about how to create a virtual network visit
+        https://learn.microsoft.com/azure/virtual-network/manage-virtual-network#create-a-virtual-
+        network.
+
+Arguments
+    --name -n                                [Required] : The virtual network (VNet) name.
+    --resource-group -g                      [Required] : Name of resource group. You can configure
+                                                          the default group using `az configure
+                                                          --defaults group=<name>`.
+    --address-prefixes                                  : Space-separated list of IP address
+                                                          prefixes for the VNet. Default:
+                                                          10.0.0.0/16. If provided, --ipam-
+                                                          allocations should not be specified.
+                                                          Support shorthand-syntax, json-file and
+                                                          yaml-file. Try "??" to show more.
+                                                          Default: ['10.0.0.0/16'].
+    --bgp-community                                     : The BGP community associated with the
+                                                          virtual network.
+    --ddos-protection                                   : Control whether DDoS protection is
+                                                          enabled.  Allowed values: 0, 1, f, false,
+                                                          n, no, t, true, y, yes.
+    --ddos-protection-plan                              : Name or ID of a DDoS protection plan to
+                                                          associate with the VNet.
+    --dns-servers                                       : Space-separated list of DNS server IP
+                                                          addresses.  Support shorthand-syntax,
+                                                          json-file and yaml-file. Try "??" to show
+                                                          more.
+    --edge-zone                                         : The name of edge zone.
+    --enable-encryption                                 : Enable encryption on the virtual network.
+                                                          Allowed values: 0, 1, f, false, n, no, t,
+                                                          true, y, yes.
+    --encryption-enforcement-policy --encryption-policy : To control if the Virtual Machine without
+                                                          encryption is allowed in encrypted Virtual
+                                                          Network or not.  Allowed values:
+                                                          AllowUnencrypted, DropUnencrypted.
+    --flowtimeout                                       : The FlowTimeout value (in minutes) for the
+                                                          Virtual Network.
+    --location -l                                       : Resource location.
+    --no-wait                                           : Do not wait for the long-running operation
+                                                          to finish.  Allowed values: 0, 1, f,
+                                                          false, n, no, t, true, y, yes.
+    --pe-vnet-policies --private-endpoint-vnet-policies : Private Endpoint VNet Policies.  Allowed
+                                                          values: Basic, Disabled.
+    --tags                                              : Space-separated tags: key[=value]
+                                                          [key[=value] ...].  Support shorthand-
+                                                          syntax, json-file and yaml-file. Try "??"
+                                                          to show more.
+    --vm-protection                                     : Enable VM protection for all subnets in
+                                                          the VNet.  Allowed values: 0, 1, f, false,
+                                                          n, no, t, true, y, yes.
+
+AddressSpace Arguments
+    --ipam-allocations --ipam-pool-prefix-allocations   : A list of IPAM Pools allocating IP address
+                                                          prefixes. If provided, --address-prefixes
+                                                          would be ignored and should not be
+                                                          specified.  Support shorthand-syntax,
+                                                          json-file and yaml-file. Try "??" to show
+                                                          more.
+
+Global Policy Arguments
+    --acquire-policy-token                              : Acquiring an Azure Policy token
+                                                          automatically for this resource operation.
+    --change-reference                                  : The related change reference ID for this
+                                                          resource operation.
+
+Properties Arguments
+    --sgp --summarized-gateway-prefixes       [Preview] : A configurable list of summarized gateway
+                                                          prefixes advertised for the virtual
+                                                          network.  Support shorthand-syntax, json-
+                                                          file and yaml-file. Try "??" to show more.
+        WARNING: Argument '--summarized-gateway-prefixes' is in preview and under development.
+        Reference and support levels: https://aka.ms/CLI_refstatus
+
+Subnet Arguments
+    --network-security-group --nsg                      : Name or ID of a network security group
+                                                          (NSG).
+    --subnet-name                                       : Name of a new subnet to create within the
+                                                          VNet.
+    --subnet-prefixes                                   : Space-separated list of address prefixes
+                                                          in CIDR format for the new subnet. If
+                                                          omitted, automatically reserves a /24 (or
+                                                          as large as available) block within the
+                                                          VNet address space.  Support shorthand-
+                                                          syntax, json-file and yaml-file. Try "??"
+                                                          to show more.
+    --subnets                                           : Manage a list of subnets in a Virtual
+                                                          Network (similar to `az network vnet
+                                                          subnet`).  Support shorthand-syntax, json-
+                                                          file and yaml-file. Try "??" to show more.
+
+Global Arguments
+    --debug                                             : Increase logging verbosity to show all
+                                                          debug logs.
+    --help -h                                           : Show this help message and exit.
+    --only-show-errors                                  : Only show errors, suppressing warnings.
+    --output -o                                         : Output format.  Allowed values: json,
+                                                          jsonc, none, table, tsv, yaml, yamlc.
+                                                          Default: json.
+    --query                                             : JMESPath query string. See
+                                                          http://jmespath.org/ for more information
+                                                          and examples.
+    --subscription                                      : Name or ID of subscription. You can
+                                                          configure the default subscription using
+                                                          `az account set -s NAME_OR_ID`.
+    --verbose                                           : Increase logging verbosity. Use --debug
+                                                          for full debug logs.
+
+Examples
+    Create a virtual network with a specific address prefix and one subnet.
+        az network vnet create -g MyResourceGroup -n MyVnet --address-prefix 10.0.0.0/16 --subnet-
+        name MySubnet --subnet-prefixes 10.0.0.0/24
+
+    Create a virtual network.
+        az network vnet create --address-prefixes 10.0.0.0/16 --name MyVirtualNetwork --resource-
+        group MyResourceGroup --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
+
+    Create virtual network with an IPAM pool allocation.
+        az network vnet create -g MyResourceGroup -n MyVNet --ipam-allocations [0].number-of-ip-
+        addresses=100 [0].id=ipam-pool-resource-id
+
+    For --summarized-gateway-prefixes with address-prefixes
+        az network vnet create --resource-group rg1 --name test-vnet --location eastus --address-
+        prefixes 10.0.0.0/16 --summarized-gateway-prefixes address-prefixes="[10.0.0.0/16]"
+

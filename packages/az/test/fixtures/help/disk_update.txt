@@ -1,0 +1,141 @@
+
+Command
+    az disk update : Update a managed disk.
+
+Arguments
+    --disk-access                                 : Name or ID of the disk access resource for using
+                                                    private endpoints on disks.
+    --disk-encryption-set                         : Name or ID of disk encryption set that is used
+                                                    to encrypt the disk.
+    --no-wait                                     : Do not wait for the long-running operation to
+                                                    finish.  Allowed values: 0, 1, f, false, n, no,
+                                                    t, true, y, yes.
+    --sku                                         : Underlying storage SKU.  Allowed values:
+                                                    PremiumV2_LRS, Premium_LRS, Premium_ZRS,
+                                                    StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS,
+                                                    UltraSSD_LRS.
+
+AvailabilityPolicy Arguments
+    --action-on-disk-delay                        : Determine on how to handle disks with slow I/O.
+                                                    Allowed values: AutomaticReattach, None.
+
+Encryption Arguments
+    --encryption-type                             : Encryption type.  Allowed values:
+                                                    EncryptionAtRestWithCustomerKey,
+                                                    EncryptionAtRestWithPlatformAndCustomerKeys,
+                                                    EncryptionAtRestWithPlatformKey.
+
+Generic Update Arguments
+    --add                                         : Add an object to a list of objects by specifying
+                                                    a path and key value pairs.  Example: `--add
+                                                    property.listProperty <key=value, string or JSON
+                                                    string>`.
+    --force-string                                : When using 'set' or 'add', preserve string
+                                                    literals instead of attempting to convert to
+                                                    JSON.  Allowed values: 0, 1, f, false, n, no, t,
+                                                    true, y, yes.
+    --remove                                      : Remove a property or an element from a list.
+                                                    Example: `--remove property.list
+                                                    <indexToRemove>` OR `--remove propertyToRemove`.
+    --set                                         : Update an object by specifying a property path
+                                                    and value to set.  Example: `--set
+                                                    property1.property2=<value>`.
+
+Global Policy Arguments
+    --acquire-policy-token                        : Acquiring an Azure Policy token automatically
+                                                    for this resource operation.
+    --change-reference                            : The related change reference ID for this
+                                                    resource operation.
+
+Properties Arguments
+    --bursting-enabled --enable-bursting          : Enable on-demand bursting beyond the provisioned
+                                                    performance target of the disk. On-demand
+                                                    bursting is disabled by default, and it does not
+                                                    apply to Ultra disks.  Allowed values: 0, 1, f,
+                                                    false, n, no, t, true, y, yes.
+    --data-access-auth-mode                       : Specify the auth mode when exporting or
+                                                    uploading to a disk or snapshot.  Allowed
+                                                    values: AzureActiveDirectory, None.
+    --disk-iops-read-only                         : The total number of IOPS that will be allowed
+                                                    across all VMs mounting the shared disk as
+                                                    ReadOnly. One operation can transfer between 4k
+                                                    and 256k bytes.
+    --disk-iops-read-write                        : The number of IOPS allowed for this disk; only
+                                                    settable for UltraSSD disks. One operation can
+                                                    transfer between 4k and 256k bytes.
+    --disk-mbps-read-only                         : The total throughput (MBps) that will be allowed
+                                                    across all VMs mounting the shared disk as
+                                                    ReadOnly. MBps means millions of bytes per
+                                                    second - MB here uses the ISO notation, of
+                                                    powers of 10.
+    --disk-mbps-read-write                        : The bandwidth allowed for this disk; only
+                                                    settable for UltraSSD disks. MBps means millions
+                                                    of bytes per second - MB here uses the ISO
+                                                    notation, of powers of 10.
+    --disk-size-gb --size-gb -z                   : Size in GB. Max size: 4095 GB (certain preview
+                                                    disks can be larger).
+    --max-shares                                  : The maximum number of VMs that can attach to the
+                                                    disk at the same time. Value greater than one
+                                                    indicates a disk that can be mounted on multiple
+                                                    VMs at the same time.
+    --network-access-policy                       : Policy for accessing the disk via network.
+                                                    Allowed values: AllowAll, AllowPrivate, DenyAll.
+    --public-network-access             [Preview] : Customers can set on Managed Disks or Snapshots
+                                                    to control the export policy on the disk.
+                                                    Allowed values: Disabled, Enabled.
+        WARNING: Argument '--public-network-access' is in preview and under development. Reference
+        and support levels: https://aka.ms/CLI_refstatus
+
+Resource Id Arguments
+    --disk-name --name -n                         : The name of the managed disk that is being
+                                                    created. The name can't be changed after the
+                                                    disk is created. Supported characters for the
+                                                    name are a-z, A-Z, 0-9, _ and -. The maximum
+                                                    name length is 80 characters.
+    --ids                                         : One or more resource IDs (space-delimited). It
+                                                    should be a complete resource ID containing all
+                                                    information of 'Resource Id' arguments. You
+                                                    should provide either --ids or other 'Resource
+                                                    Id' arguments.
+    --resource-group -g                           : Name of resource group. You can configure the
+                                                    default group using `az configure --defaults
+                                                    group=<name>`.
+    --subscription                                : Name or ID of subscription. You can configure
+                                                    the default subscription using `az account set
+                                                    -s NAME_OR_ID`.
+
+SupportedCapabilities Arguments
+    --accelerated-network               [Preview] : Customers can set on Managed Disks or Snapshots
+                                                    to enable the accelerated networking if the OS
+                                                    disk image support.  Allowed values: 0, 1, f,
+                                                    false, n, no, t, true, y, yes.
+        WARNING: Argument '--accelerated-network' is in preview and under development. Reference and
+        support levels: https://aka.ms/CLI_refstatus
+    --architecture                                : CPU architecture supported by an OS disk.
+                                                    Allowed values: Arm64, x64.
+    --security-option --supported-security-option : Refer to the security capability of the disk
+                                                    supported to create a Trusted launch or
+                                                    Confidential VM.  Allowed values:
+                                                    TrustedLaunchAndConfidentialVMSupported,
+                                                    TrustedLaunchSupported.
+
+Global Arguments
+    --debug                                       : Increase logging verbosity to show all debug
+                                                    logs.
+    --help -h                                     : Show this help message and exit.
+    --only-show-errors                            : Only show errors, suppressing warnings.
+    --output -o                                   : Output format.  Allowed values: json, jsonc,
+                                                    none, table, tsv, yaml, yamlc.  Default: json.
+    --query                                       : JMESPath query string. See http://jmespath.org/
+                                                    for more information and examples.
+    --verbose                                     : Increase logging verbosity. Use --debug for full
+                                                    debug logs.
+
+Examples
+    Update a managed disk and associate it with a disk access resource.
+        az disk update --name MyManagedDisk --resource-group MyResourceGroup --network-access-policy
+        AllowPrivate --disk-access MyDiskAccessID
+
+    Update a managed disk.
+        az disk update --name MyManagedDisk --resource-group MyResourceGroup --size-gb 20
+

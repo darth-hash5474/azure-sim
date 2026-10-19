@@ -1,0 +1,55 @@
+
+Command
+    az vm deallocate : Deallocate a VM so that computing resources are no longer allocated (charges
+    no longer apply). The status will change from 'Stopped' to 'Stopped (Deallocated)'.
+        For an end-to-end tutorial, see https://learn.microsoft.com/azure/virtual-
+        machines/linux/capture-image.
+
+Arguments
+    --force-deallocate     : Optional parameter to force deallocate a virtual machine. Default is
+                             false.  Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --hibernate            : Optional parameter to hibernate a virtual machine.  Allowed values: 0,
+                             1, f, false, n, no, t, true, y, yes.
+    --no-wait              : Do not wait for the long-running operation to finish.  Allowed values:
+                             0, 1, f, false, n, no, t, true, y, yes.
+
+Global Policy Arguments
+    --acquire-policy-token : Acquiring an Azure Policy token automatically for this resource
+                             operation.
+    --change-reference     : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --ids                  : One or more resource IDs (space-delimited). It should be a complete
+                             resource ID containing all information of 'Resource Id' arguments. You
+                             should provide either --ids or other 'Resource Id' arguments.
+    --name --vm-name -n    : The name of the Virtual Machine. You can configure the default using
+                             `az configure --defaults vm=<name>`.
+    --resource-group -g    : Name of resource group. You can configure the default group using `az
+                             configure --defaults group=<name>`.
+    --subscription         : Name or ID of subscription. You can configure the default subscription
+                             using `az account set -s NAME_OR_ID`.
+
+Global Arguments
+    --debug                : Increase logging verbosity to show all debug logs.
+    --help -h              : Show this help message and exit.
+    --only-show-errors     : Only show errors, suppressing warnings.
+    --output -o            : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                             yamlc.  Default: json.
+    --query                : JMESPath query string. See http://jmespath.org/ for more information
+                             and examples.
+    --verbose              : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Deallocate, generalize, and capture a stopped virtual machine.
+        az vm deallocate -g MyResourceGroup -n MyVm
+        az vm generalize -g MyResourceGroup -n MyVm
+        az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
+
+    Deallocate, generalize, and capture multiple stopped virtual machines.
+        az vm deallocate --ids vms_ids
+        az vm generalize --ids vms_ids
+        az vm capture --ids vms_ids --vhd-name-prefix MyPrefix
+
+    Deallocate a VM.
+        az vm deallocate --name MyVm --no-wait --resource-group MyResourceGroup
+

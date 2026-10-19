@@ -1,0 +1,138 @@
+
+Command
+    az storage file upload : Upload a file to a share.
+        Creates or updates an Azure file from a source path with automatic chunking and progress
+        notifications.
+
+Arguments
+    --source                                 [Required] : Path of the local file to upload as the
+                                                          file content.
+    --auth-mode                                         : The mode in which to run the command.
+                                                          "login" mode will directly use your login
+                                                          credentials for the authentication. The
+                                                          legacy "key" mode will attempt to query
+                                                          for an account key if no authentication
+                                                          parameters for the account are provided.
+                                                          Environment variable:
+                                                          AZURE_STORAGE_AUTH_MODE.  Allowed values:
+                                                          key, login.
+    --backup-intent --enable-file-backup-request-intent : Required parameter to use with OAuth
+                                                          (Azure AD) Authentication for Files. This
+                                                          will bypass any file/directory level
+                                                          permission checks and allow access, based
+                                                          on the allowed data actions, even if there
+                                                          are ACLs in place for those
+                                                          files/directories.
+    --content-cache --content-cache-control             : The cache control string.
+    --content-disposition                               : Conveys additional information about how
+                                                          to process the response payload, and can
+                                                          also be used to attach additional
+                                                          metadata.
+    --content-encoding                                  : The content encoding type.
+    --content-language                                  : The content language.
+    --content-md5                                       : The content's MD5 hash.
+    --content-type                                      : The content MIME type.
+    --disallow-trailing-dot                             : If true, the trailing dot will be trimmed
+                                                          from the target URI. Default to False.
+                                                          Allowed values: false, true.
+    --file-mode                                         : Only applicable to NFS Files. The mode
+                                                          permissions to be set on the file.
+                                                          Symbolic (rwxrw-rw-) is supported. The
+                                                          sticky bit is also supported and its
+                                                          represented either by the letter t or T in
+                                                          the final character-place depending on
+                                                          whether the execution bit for the others
+                                                          category is set or unset respectively,
+                                                          absence of t or T indicates sticky bit not
+                                                          set.".
+    --file-url                                          : The full endpoint URL to the File,
+                                                          including SAS token if used.
+    --group                                             : Only applicable to NFS Files. The owner
+                                                          group identifier (GID) to be set on the
+                                                          file. The default value is 0 (root group).
+    --max-connections                                   : Maximum number of parallel connections to
+                                                          use.  Default: 2.
+    --metadata                                          : Metadata in space-separated key=value
+                                                          pairs. This overwrites any existing
+                                                          metadata.
+    --no-progress                                       : Include this flag to disable progress
+                                                          reporting for the command.
+    --owner                                             : Only applicable to NFS Files. The owner
+                                                          user identifier (UID) to be set on the
+                                                          file. The default value is 0 (root).
+    --path -p                                           : The path to the file within the file
+                                                          share. If the file name is omitted, the
+                                                          source file name will be used.
+    --share-name -s                                     : The file share name.
+    --timeout                                           : Request timeout in seconds. Applies to
+                                                          each call to the service.
+    --validate-content                                  : If true, calculates an MD5 hash for each
+                                                          range of the file. The storage service
+                                                          checks the hash of the content that has
+                                                          arrived with the hash that was sent. This
+                                                          is primarily valuable for detecting
+                                                          bitflips on the wire if using http instead
+                                                          of https as https (the default) will
+                                                          already validate. Note that this MD5 hash
+                                                          is not stored with the file.
+
+Global Policy Arguments
+    --acquire-policy-token                              : Acquiring an Azure Policy token
+                                                          automatically for this resource operation.
+    --change-reference                                  : The related change reference ID for this
+                                                          resource operation.
+
+Storage Account Arguments
+    --account-key                                       : Storage account key. Must be used in
+                                                          conjunction with storage account name or
+                                                          service endpoint. Environment variable:
+                                                          AZURE_STORAGE_KEY.
+    --account-name                                      : Storage account name. Related environment
+                                                          variable: AZURE_STORAGE_ACCOUNT. Must be
+                                                          used in conjunction with either storage
+                                                          account key or a SAS token. If neither are
+                                                          present, the command will try to query the
+                                                          storage account key using the
+                                                          authenticated Azure account. If a large
+                                                          number of storage commands are executed
+                                                          the API quota may be hit.
+    --connection-string                                 : Storage account connection string.
+                                                          Environment variable:
+                                                          AZURE_STORAGE_CONNECTION_STRING.
+    --file-endpoint                                     : Storage data service endpoint. Must be
+                                                          used in conjunction with either storage
+                                                          account key or a SAS token. You can find
+                                                          each service primary endpoint with `az
+                                                          storage account show`. Environment
+                                                          variable: AZURE_STORAGE_SERVICE_ENDPOINT.
+    --sas-token                                         : A Shared Access Signature (SAS). Must be
+                                                          used in conjunction with storage account
+                                                          name or service endpoint. Environment
+                                                          variable: AZURE_STORAGE_SAS_TOKEN.
+
+Global Arguments
+    --debug                                             : Increase logging verbosity to show all
+                                                          debug logs.
+    --help -h                                           : Show this help message and exit.
+    --only-show-errors                                  : Only show errors, suppressing warnings.
+    --output -o                                         : Output format.  Allowed values: json,
+                                                          jsonc, none, table, tsv, yaml, yamlc.
+                                                          Default: json.
+    --query                                             : JMESPath query string. See
+                                                          http://jmespath.org/ for more information
+                                                          and examples.
+    --subscription                                      : Name or ID of subscription. You can
+                                                          configure the default subscription using
+                                                          `az account set -s NAME_OR_ID`.
+    --verbose                                           : Increase logging verbosity. Use --debug
+                                                          for full debug logs.
+
+Examples
+    Upload to a local file to a share.
+        az storage file upload -s MyShare --source /path/to/file
+
+    Upload a file to a share.
+        az storage file upload --account-key 00000000 --account-name MyStorageAccount --path
+        path/file.txt --share-name MyShare --source /path/to/file
+
+

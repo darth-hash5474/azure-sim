@@ -1,0 +1,38 @@
+
+Command
+    az backup job list : List all backup jobs of a Recovery Services vault.
+
+Arguments
+    --resource-group -g [Required] : Name of resource group. You can configure the default group
+                                     using `az configure --defaults group=<name>`.
+    --vault-name -v     [Required] : Name of the Recovery services vault.
+    --backup-management-type       : Specify the backup management type. Define how Azure Backup
+                                     manages the backup of entities within the ARM resource. For eg:
+                                     AzureWorkloads refers to workloads installed within Azure VMs,
+                                     AzureStorage refers to entities within Storage account.
+                                     Required only if friendly name is used as Container name.
+                                     Allowed values: AzureIaasVM, AzureStorage, AzureWorkload, MAB.
+    --end-date                     : The end date of the range in UTC (d-m-Y).
+    --operation                    : User initiated operation.  Allowed values: Backup,
+                                     ConfigureBackup, DeleteBackupData, DisableBackup, Restore.
+    --start-date                   : The start date of the range in UTC (d-m-Y).
+    --status                       : Status of the Job.  Allowed values: Cancelled, Completed,
+                                     CompletedWithWarnings, Failed, InProgress.
+    --use-secondary-region         : Use this flag to show recoverypoints in secondary region.
+
+Global Arguments
+    --debug                        : Increase logging verbosity to show all debug logs.
+    --help -h                      : Show this help message and exit.
+    --only-show-errors             : Only show errors, suppressing warnings.
+    --output -o                    : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                     yaml, yamlc.  Default: json.
+    --query                        : JMESPath query string. See http://jmespath.org/ for more
+                                     information and examples.
+    --subscription                 : Name or ID of subscription. You can configure the default
+                                     subscription using `az account set -s NAME_OR_ID`.
+    --verbose                      : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    List all backup jobs of a Recovery Services vault
+        az backup job list --resource-group MyResourceGroup --vault-name MyVault
+

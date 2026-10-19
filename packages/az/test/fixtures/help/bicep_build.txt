@@ -1,0 +1,50 @@
+
+Command
+    az bicep build : Build a Bicep file.
+
+Arguments
+    --file -f   [Required] : The path to the Bicep file to build in the file system.
+    --no-restore           : When set, builds the bicep file without restoring external modules.
+    --outdir               : When set, saves the output file at the specified directory. Only the
+                             given file is output; for bicepparam files, the referenced template is
+                             not included.
+    --outfile              : When set, saves the output as the specified file path. Only the given
+                             file is output; for bicepparam files, the referenced template is not
+                             included.
+    --stdout               : When set, prints all output to stdout instead of corresponding files.
+                             For bicepparam files that reference a template, both the parameters and
+                             the referenced Bicep template are included in the output.
+
+Global Policy Arguments
+    --acquire-policy-token : Acquiring an Azure Policy token automatically for this resource
+                             operation.
+    --change-reference     : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                : Increase logging verbosity to show all debug logs.
+    --help -h              : Show this help message and exit.
+    --only-show-errors     : Only show errors, suppressing warnings.
+    --output -o            : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                             yamlc.  Default: json.
+    --query                : JMESPath query string. See http://jmespath.org/ for more information
+                             and examples.
+    --subscription         : Name or ID of subscription. You can configure the default subscription
+                             using `az account set -s NAME_OR_ID`.
+    --verbose              : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Build a Bicep file.
+        az bicep build --file {bicep_file}
+
+    Build a Bicep file and print all output to stdout.
+        az bicep build --file {bicep_file} --stdout
+
+    Build a Bicep file and save the result to the specified directory.
+        az bicep build --file {bicep_file} --outdir {out_dir}
+
+    Build a Bicep file and save the result to the specified file.
+        az bicep build --file {bicep_file} --outfile {out_file}
+
+    Build a Bicep file without restoring external modules.
+        az bicep build --file {bicep_file} --no-restore
+

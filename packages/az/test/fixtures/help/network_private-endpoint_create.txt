@@ -1,0 +1,183 @@
+
+Command
+    az network private-endpoint create : Create a private endpoint.
+
+Arguments
+    --connection-name                                     [Required] : Name of the private link
+                                                                       service connection.
+    --name -n                                             [Required] : Name of the private endpoint.
+    --private-connection-resource-id                      [Required] : The resource id of the
+                                                                       private endpoint to connect
+                                                                       to.
+    --resource-group -g                                   [Required] : Name of resource group. You
+                                                                       can configure the default
+                                                                       group using `az configure
+                                                                       --defaults group=<name>`.
+    --subnet                                              [Required] : Name or ID of an existing
+                                                                       subnet. If name specified,
+                                                                       also specify --vnet-name. If
+                                                                       you want to use an existing
+                                                                       subnet in other resource
+                                                                       group or subscription, please
+                                                                       provide the ID instead of the
+                                                                       name of the subnet and do not
+                                                                       specify the--vnet-name.
+    --edge-zone                                                      : The name of edge zone.
+    --group-id --group-ids                                           : The ID of the group obtained
+                                                                       from the remote resource that
+                                                                       this private endpoint should
+                                                                       connect to. You can use "az
+                                                                       network private-link-resource
+                                                                       list" to obtain the supported
+                                                                       group ids. You must provide
+                                                                       this except for
+                                                                       PrivateLinkService.,  Support
+                                                                       shorthand-syntax, json-file
+                                                                       and yaml-file. Try "??" to
+                                                                       show more.
+    --location -l                                                    : Location. Values from: `az
+                                                                       account list-locations`. You
+                                                                       can configure the default
+                                                                       location using `az configure
+                                                                       --defaults
+                                                                       location=<location>`.
+    --manual-request                                                 : Use manual request to
+                                                                       establish the connection.
+                                                                       Configure it as 'true' when
+                                                                       you don't have access to the
+                                                                       subscription of private link
+                                                                       service.  Allowed values: 0,
+                                                                       1, f, false, n, no, t, true,
+                                                                       y, yes.
+    --nic-name                                                       : The custom name of the
+                                                                       network interface attached to
+                                                                       the private endpoint.
+    --no-wait                                                        : Do not wait for the long-
+                                                                       running operation to finish.
+                                                                       Allowed values: 0, 1, f,
+                                                                       false, n, no, t, true, y,
+                                                                       yes.
+    --request-message                                                : A message passed to the owner
+                                                                       of the remote resource with
+                                                                       this connection request.
+                                                                       Restricted to 140 chars.
+    --tags                                                           : Space-separated tags:
+                                                                       key[=value] [key[=value]...].
+                                                                       Use "" to clear existing
+                                                                       tags.  Support shorthand-
+                                                                       syntax, json-file and yaml-
+                                                                       file. Try "??" to show more.
+    --vnet-name                                                      : The virtual network (VNet)
+                                                                       associated with the subnet
+                                                                       (Omit if supplying a subnet
+                                                                       id).
+
+Application Security Group Arguments
+    --asg --asgs                                                     : The private endpoint
+                                                                       application security groups.
+                                                                       Support shorthand-syntax,
+                                                                       json-file and yaml-file. Try
+                                                                       "??" to show more.  Singular
+                                                                       flags: `--asg`.
+
+Global Policy Arguments
+    --acquire-policy-token                                           : Acquiring an Azure Policy
+                                                                       token automatically for this
+                                                                       resource operation.
+    --change-reference                                               : The related change reference
+                                                                       ID for this resource
+                                                                       operation.
+
+Properties Arguments
+    --app-gateway-ip-configs --application-gateway-ip-configurations : Application gateway IP
+                                                                       configurations of virtual
+                                                                       network resource.  Support
+                                                                       shorthand-syntax, json-file
+                                                                       and yaml-file. Try "??" to
+                                                                       show more.
+    --billing-sku                                                    : The billing sku of the
+                                                                       private endpoint.  Allowed
+                                                                       values: Fixed, PayAsYouGo.
+    --default-outbound-access --outbound-access                      : Set this property to false to
+                                                                       disable default outbound
+                                                                       connectivity for all VMs in
+                                                                       the subnet.  Allowed values:
+                                                                       0, 1, f, false, n, no, t,
+                                                                       true, y, yes.
+    --ip-version-type                                                : Specifies the IP version type
+                                                                       for the private IPs of the
+                                                                       private endpoint. If not
+                                                                       defined, this defaults to
+                                                                       IPv4.  Allowed values:
+                                                                       DualStack, IPv4, IPv6.
+                                                                       Default: IPv4.
+    --ipam-pool-prefix-allocations --ipam-prefix-allocs              : A list of IPAM Pools for
+                                                                       allocating IP address
+                                                                       prefixes.  Support shorthand-
+                                                                       syntax, json-file and yaml-
+                                                                       file. Try "??" to show more.
+    --service-gateway                                                : Reference to an existing
+                                                                       service gateway.  Support
+                                                                       shorthand-syntax, json-file
+                                                                       and yaml-file. Try "??" to
+                                                                       show more.
+    --sharing-scope                                                  : Set this property to Tenant
+                                                                       to allow sharing subnet with
+                                                                       other subscriptions in your
+                                                                       AAD tenant. This property can
+                                                                       only be set if
+                                                                       defaultOutboundAccess is set
+                                                                       to false, both properties can
+                                                                       only be set if subnet is
+                                                                       empty.  Allowed values:
+                                                                       DelegatedServices, Tenant.
+
+Static IP Configuration Arguments
+    --ip-config --ip-configs                                         : The private endpoint ip
+                                                                       configurations.  Support
+                                                                       shorthand-syntax, json-file
+                                                                       and yaml-file. Try "??" to
+                                                                       show more.  Singular flags:
+                                                                       `--ip-config`.
+
+Global Arguments
+    --debug                                                          : Increase logging verbosity to
+                                                                       show all debug logs.
+    --help -h                                                        : Show this help message and
+                                                                       exit.
+    --only-show-errors                                               : Only show errors, suppressing
+                                                                       warnings.
+    --output -o                                                      : Output format.  Allowed
+                                                                       values: json, jsonc, none,
+                                                                       table, tsv, yaml, yamlc.
+                                                                       Default: json.
+    --query                                                          : JMESPath query string. See
+                                                                       http://jmespath.org/ for more
+                                                                       information and examples.
+    --subscription                                                   : Name or ID of subscription.
+                                                                       You can configure the default
+                                                                       subscription using `az
+                                                                       account set -s NAME_OR_ID`.
+    --verbose                                                        : Increase logging verbosity.
+                                                                       Use --debug for full debug
+                                                                       logs.
+
+Examples
+    Create a private endpoint.
+        az network private-endpoint create -g MyResourceGroup -n MyPE --vnet-name MyVnetName
+        --subnet MySubnet --private-connection-resource-id "/subscriptions/00000000-0000-0000-0000-
+        000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Network/privateLinkServices/
+        MyPLS" --connection-name tttt -l centralus
+
+    Create a private endpoint with ASGs.
+        az network private-endpoint create -n MyPE -g MyResourceGroup --vnet-name MyVnetName
+        --subnet MySubnet --connection-name MyConnectionName --group-id MyGroupId --private-
+        connection-resource-id MyResourceId --asg id=MyAsgId --asg id=MyAsgId
+
+    Create a private endpoint with ip-configs.
+        az network private-endpoint create -n MyPE -g MyResourceGroup --vnet-name MyVnetName
+        --subnet MySubnet --connection-name MyConnectionName --group-id MyGroupId --private-
+        connection-resource-id MyResourceId --ip-configs [{name:Myipconfig1,group-id:MyGroupId
+        ,member-name:MyMemberName,private-ip-address:10.0.0.4},{name:Myipconfig2,private-ip-
+        address:10.0.0.6}]
+

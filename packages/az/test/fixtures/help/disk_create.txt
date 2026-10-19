@@ -1,0 +1,274 @@
+
+Command
+    az disk create : Create a managed disk.
+
+Arguments
+    --name -n                          [Required] : The name of the managed disk.
+    --resource-group -g                [Required] : Name of resource group. You can configure the
+                                                    default group using `az configure --defaults
+                                                    group=<name>`.
+    --accelerated-network               [Preview] : Customers can set on Managed Disks or Snapshots
+                                                    to enable the accelerated networking if the OS
+                                                    disk image support.  Allowed values: false,
+                                                    true.
+        WARNING: Argument '--accelerated-network' is in preview and under development. Reference and
+        support levels: https://aka.ms/CLI_refstatus
+    --action-on-disk-delay                        : Determine on how to handle disks with slow I/O.
+                                                    Allowed values: AutomaticReattach.
+    --architecture                                : CPU architecture.  Allowed values: Arm64, x64.
+    --data-access-auth-mode                       : Specify the auth mode when exporting or
+                                                    uploading to a disk or snapshot.  Allowed
+                                                    values: AzureActiveDirectory, None.
+    --disk-access                                 : Name or ID of the disk access resource for using
+                                                    private endpoints on disks.
+    --disk-encryption-set                         : Name or ID of disk encryption set that is used
+                                                    to encrypt the disk.
+    --disk-iops-read-only                         : The total number of IOPS that will be allowed
+                                                    across all VMs mounting the shared disk as
+                                                    ReadOnly. One operation can transfer between 4k
+                                                    and 256k bytes.
+    --disk-iops-read-write                        : The number of IOPS allowed for this disk. Only
+                                                    settable for UltraSSD disks. One operation can
+                                                    transfer between 4k and 256k bytes.
+    --disk-mbps-read-only                         : The total throughput (MBps) that will be allowed
+                                                    across all VMs mounting the shared disk as
+                                                    ReadOnly. MBps means millions of bytes per
+                                                    second - MB here uses the ISO notation, of
+                                                    powers of 10.
+    --disk-mbps-read-write                        : The bandwidth allowed for this disk. Only
+                                                    settable for UltraSSD disks. MBps means millions
+                                                    of bytes per second with ISO notation of powers
+                                                    of 10.
+    --edge-zone                                   : The name of edge zone.
+    --enable-bursting                             : Enable on-demand bursting beyond the provisioned
+                                                    performance target of the disk. On-demand
+                                                    bursting is disabled by default, and it does not
+                                                    apply to Ultra disks.  Allowed values: false,
+                                                    true.
+    --encryption-type                             : Encryption type.
+                                                    EncryptionAtRestWithPlatformKey: Disk is
+                                                    encrypted with XStore managed key at rest. It is
+                                                    the default encryption type.
+                                                    EncryptionAtRestWithCustomerKey: Disk is
+                                                    encrypted with Customer managed key at rest.
+                                                    Allowed values: EncryptionAtRestWithCustomerKey,
+                                                    EncryptionAtRestWithPlatformAndCustomerKeys,
+                                                    EncryptionAtRestWithPlatformKey.
+    --gallery-image-reference                     : ID of the Compute, Shared or Community Gallery
+                                                    image version from which to create a disk. For
+                                                    details about valid format, please refer to the
+                                                    help sample.
+    --gallery-image-reference-lun                 : If the disk is created from an image's data
+                                                    disk, this is an index that indicates which of
+                                                    the data disks in the image to use. For OS
+                                                    disks, this field is null.
+    --hyper-v-generation                          : The hypervisor generation of the Virtual
+                                                    Machine. Applicable to OS disks only.  Allowed
+                                                    values: V1, V2.
+    --image-reference                             : ID or URN (publisher:offer:sku:version) of the
+                                                    image from which to create a disk.
+    --image-reference-lun                         : If the disk is created from an image's data
+                                                    disk, this is an index that indicates which of
+                                                    the data disks in the image to use. For OS
+                                                    disks, this field is null.
+    --location -l                                 : Location. Values from: `az account list-
+                                                    locations`. You can configure the default
+                                                    location using `az configure --defaults
+                                                    location=<location>`. If location is not
+                                                    specified and no default location specified,
+                                                    location will be automatically set as same as
+                                                    the resource group.
+    --logical-sector-size                         : Logical sector size in bytes for Ultra disks.
+                                                    Supported values are 512 ad 4096. 4096 is the
+                                                    default.
+    --max-shares                                  : The maximum number of VMs that can attach to the
+                                                    disk at the same time. Value greater than one
+                                                    indicates a disk that can be mounted on multiple
+                                                    VMs at the same time.
+    --network-access-policy                       : Policy for accessing the disk via network.
+                                                    Allowed values: AllowAll, AllowPrivate, DenyAll.
+    --no-wait                                     : Do not wait for the long-running operation to
+                                                    finish.
+    --optimized-for-frequent-attach               : Setting this property to true improves
+                                                    reliability and performance of data disks that
+                                                    are frequently (more than 5 times a day) by
+                                                    detached from one virtual machine and attached
+                                                    to another. This property should not be set for
+                                                    disks that are not detached and attached
+                                                    frequently as it causes the disks to not align
+                                                    with the fault domain of the virtual machine.
+                                                    Allowed values: false, true.
+    --os-type                                     : The Operating System type of the Disk.  Allowed
+                                                    values: Linux, Windows.
+    --performance-plus                            : Set this flag to true to get a boost on the
+                                                    performance target of the disk deployed. This
+                                                    flag can only be set on disk creation time and
+                                                    cannot be disabled after enabled.  Allowed
+                                                    values: false, true.
+    --public-network-access             [Preview] : Customers can set on Managed Disks or Snapshots
+                                                    to control the export policy on the disk.
+                                                    Allowed values: Disabled, Enabled.
+        WARNING: Argument '--public-network-access' is in preview and under development. Reference
+        and support levels: https://aka.ms/CLI_refstatus
+    --secure-vm-disk-encryption-set               : Name or ID of disk encryption set created with
+                                                    ConfidentialVmEncryptedWithCustomerKey
+                                                    encryption type.
+    --security-data-uri                           : Please specify the blob URI of VHD to be
+                                                    imported into VM guest state.
+    --security-metadata-uri                       : Specify the blob URI to be imported into VM
+                                                    metadata for Confidential VM.
+    --security-option --supported-security-option : Refer to the security capability of the disk
+                                                    supported to create a Trusted launch or
+                                                    Confidential VM.  Allowed values:
+                                                    TrustedLaunchAndConfidentialVMSupported,
+                                                    TrustedLaunchSupported.
+    --security-type                               : The security type of the VM. Applicable for OS
+                                                    disks only.  Allowed values:
+                                                    ConfidentialVM_DiskEncryptedWithCustomerKey,
+                                                    ConfidentialVM_DiskEncryptedWithPlatformKey, Con
+                                                    fidentialVM_VMGuestStateOnlyEncryptedWithPlatfor
+                                                    mKey, Standard, TrustedLaunch.
+    --size-gb -z                                  : Size in GB. Max size: 4095 GB (certain preview
+                                                    disks can be larger).
+    --sku                                         : Underlying storage SKU.  Allowed values:
+                                                    PremiumV2_LRS, Premium_LRS, Premium_ZRS,
+                                                    StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS,
+                                                    UltraSSD_LRS.  Default: Premium_LRS.
+    --source                                      : Source to create the disk/snapshot from,
+                                                    including unmanaged blob uri, managed disk id or
+                                                    name, or snapshot id or name.
+    --source-storage-account-id                   : Used when source blob is in a different
+                                                    subscription.
+    --support-hibernation                         : Indicate the OS on a disk supports hibernation.
+                                                    Allowed values: false, true.
+    --tags                                        : Space-separated tags: key[=value] [key[=value]
+                                                    ...]. Use '' to clear existing tags.
+    --tier                                        : Performance tier of the disk (e.g, P4, S10) as
+                                                    described here: https://azure.microsoft.com/pric
+                                                    ing/details/managed-disks/. Does not apply to
+                                                    Ultra disks.
+    --upload-size-bytes                           : The size (in bytes) of the contents of the
+                                                    upload including the VHD footer. Min value:
+                                                    20972032. Max value: 35183298347520. This
+                                                    parameter is required if --upload-type is
+                                                    specified.
+    --upload-type                                 : Create the disk for upload scenario. 'Upload' is
+                                                    for Standard disk only upload.
+                                                    'UploadWithSecurityData' is for OS Disk upload
+                                                    along with VM Guest State. Please note the
+                                                    'UploadWithSecurityData' is not valid for data
+                                                    disk upload, it only to be used for OS Disk
+                                                    upload at present.  Allowed values: Upload,
+                                                    UploadWithSecurityData.
+    --zone                                        : Availability zone into which to provision the
+                                                    resource.
+
+Global Policy Arguments
+    --acquire-policy-token                        : Acquiring an Azure Policy token automatically
+                                                    for this resource operation.
+    --change-reference                            : The related change reference ID for this
+                                                    resource operation.
+
+Global Arguments
+    --debug                                       : Increase logging verbosity to show all debug
+                                                    logs.
+    --help -h                                     : Show this help message and exit.
+    --only-show-errors                            : Only show errors, suppressing warnings.
+    --output -o                                   : Output format.  Allowed values: json, jsonc,
+                                                    none, table, tsv, yaml, yamlc.  Default: json.
+    --query                                       : JMESPath query string. See http://jmespath.org/
+                                                    for more information and examples.
+    --subscription                                : Name or ID of subscription. You can configure
+                                                    the default subscription using `az account set
+                                                    -s NAME_OR_ID`.
+    --verbose                                     : Increase logging verbosity. Use --debug for full
+                                                    debug logs.
+
+Examples
+    Create a managed disk by importing from a blob uri.
+        az disk create -g MyResourceGroup -n MyDisk --source
+        https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd
+
+
+    Create an empty managed disk.
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 10
+
+
+    Create an empty managed disk with bursting enabled.
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 1024 --location centraluseuap
+        --enable-bursting
+
+
+    Create a managed disk by copying an existing disk or snapshot.
+        az disk create -g MyResourceGroup -n MyDisk2 --source MyDisk
+
+
+    Create a disk in an availability zone in the region of "East US 2"
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --location eastus2 --zone 1
+
+
+    Create a disk from image.
+        az disk create -g MyResourceGroup -n MyDisk --image-reference Canonical:0001-com-ubuntu-
+        server-jammy:22_04-lts-gen2:latest
+
+
+    Create a disk from the OS Disk of a compute gallery image version
+        az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/0000000
+        0-0000-0000-0000-
+        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm
+        age/versions/1.0.0
+
+
+    Create a disk from the OS Disk of the latest version in a compute gallery image
+        az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/0000000
+        0-0000-0000-0000-
+        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm
+        age
+
+
+    Create a disk from the OS Disk of a shared gallery image version
+        az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference
+        /SharedGalleries/sharedGalleryUniqueName/Images/imageName/Versions/1.0.0
+
+
+    Create a disk from the OS Disk of a community gallery image version
+        az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference
+        /CommunityGalleries/communityGalleryPublicGalleryName/Images/imageName/Versions/1.0.0
+
+
+    Create a disk from the Data Disk of a gallery image
+        az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/0000000
+        0-0000-0000-0000-
+        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm
+        age/versions/1.0.0 --gallery-image-reference-lun 0
+
+
+    Create a disk with total number of IOPS and total throughput (MBps) limitation.
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --sku UltraSSD_LRS --disk-iops-
+        read-only 200 --disk-mbps-read-only 30
+
+
+    Create a disk and specify maximum number of VMs that can attach to the disk at the same time.
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 256 --max-shares 2 -l centraluseuap
+
+
+    Create a disk and associate it with a disk access resource.
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --network-access-policy
+        AllowPrivate --disk-access MyDiskAccessID
+
+
+    Create a disk from the blob URI for VM guest state VHD.
+        az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --security-data-uri
+        GuestStateDiskVhdUri --security-type TrustedLaunch --hyper-v-generation V2
+
+
+    Create a standard disk for uploading blobs.
+        az disk create -g MyResourceGroup -n MyDisk --upload-size-bytes 20972032 --upload-type
+        Upload
+
+
+    Create an OS disk for uploading along with VM guest state.
+        az disk create -g MyResourceGroup -n MyDisk --upload-size-bytes 20972032 --upload-type
+        UploadWithSecurityData --security-type TrustedLaunch --hyper-v-generation V2
+
+

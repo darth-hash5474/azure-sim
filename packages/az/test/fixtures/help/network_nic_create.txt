@@ -1,0 +1,113 @@
+
+Command
+    az network nic create : Create a network interface.
+
+Arguments
+    --name -n                           [Required] : Name of the network interface (NIC).
+    --resource-group -g                 [Required] : Name of resource group. You can configure the
+                                                     default group using `az configure --defaults
+                                                     group=<name>`.
+    --accelerated-networking                       : Whether to enable accelerated networking.
+                                                     Allowed values: 0, 1, f, false, n, no, t, true,
+                                                     y, yes.
+    --edge-zone                                    : Name of edge zone.
+    --ip-forwarding                                : Whether to enable IP forwarding.  Allowed
+                                                     values: 0, 1, f, false, n, no, t, true, y, yes.
+    --location -l                                  : Location. Values from: `az account list-
+                                                     locations`. You can configure the default
+                                                     location using `az configure --defaults
+                                                     location=<location>`.
+    --network-security-group                       : Name or ID of an existing network security
+                                                     group.
+    --no-wait                                      : Do not wait for the long-running operation to
+                                                     finish.  Allowed values: 0, 1, f, false, n, no,
+                                                     t, true, y, yes.
+    --tags                                         : Space-separated tags: key[=value] [key[=value]
+                                                     ...].  Support shorthand-syntax, json-file and
+                                                     yaml-file. Try "??" to show more.
+
+Application Gateway Arguments
+    --ag-address-pools --app-gateway-address-pools : Space-separated list of names or IDs of
+                                                     application gateway backend address pools to
+                                                     associate with the NIC. If names are used,
+                                                     `--gateway-name` must be specified.  Support
+                                                     shorthand-syntax, json-file and yaml-file. Try
+                                                     "??" to show more.
+    --gateway-name                                 : Name of the application gateway.
+
+DNS Arguments
+    --dns-servers                                  : Space-separated list of DNS server IP
+                                                     addresses.  Support shorthand-syntax, json-file
+                                                     and yaml-file. Try "??" to show more.
+    --internal-dns-name                            : Name of internal DNS label.
+
+Global Policy Arguments
+    --acquire-policy-token                         : Acquiring an Azure Policy token automatically
+                                                     for this resource operation.
+    --change-reference                             : The related change reference ID for this
+                                                     resource operation.
+
+IP Configuration Arguments
+    --subnet                            [Required] : Name or ID of an existing subnet. If name
+                                                     specified, please also specify `--vnet-name`;
+                                                     If you want to use an existing subnet in other
+                                                     resource group, please provide the ID instead
+                                                     of the name of the subnet.
+    --application-security-groups --asgs           : Space-separated list of application security
+                                                     groups.  Support shorthand-syntax, json-file
+                                                     and yaml-file. Try "??" to show more.
+    --private-ip-address                           : Static private IP address to use.
+    --private-ip-address-version                   : Version of private IP address to use.  Allowed
+                                                     values: IPv4, IPv6.  Default: IPv4.
+    --public-ip-address                            : Name or ID of an existing public IP address.
+    --vnet-name                                    : Name of the virtual network.
+
+Load Balancer Arguments
+    --lb-address-pools                             : Space-separated list of names or IDs of load
+                                                     balancer address pools to associate with the
+                                                     NIC. If names are used, `--lb-name` must be
+                                                     specified.  Support shorthand-syntax, json-file
+                                                     and yaml-file. Try "??" to show more.
+    --lb-inbound-nat-rules                         : Space-separated list of names or IDs of load
+                                                     balancer inbound NAT rules to associate with
+                                                     the NIC. If names are used, `--lb-name` must be
+                                                     specified.  Support shorthand-syntax, json-file
+                                                     and yaml-file. Try "??" to show more.
+    --lb-name                                      : Name of the load balancer.
+
+Properties Arguments
+    --auxiliary-mode                               : Auxiliary mode of Network Interface resource.
+                                                     Allowed values: AcceleratedConnections,
+                                                     Floating, MaxConnections, None.
+    --auxiliary-sku                                : Auxiliary sku of Network Interface resource.
+                                                     Allowed values: A1, A2, A4, A8, None.
+
+Global Arguments
+    --debug                                        : Increase logging verbosity to show all debug
+                                                     logs.
+    --help -h                                      : Show this help message and exit.
+    --only-show-errors                             : Only show errors, suppressing warnings.
+    --output -o                                    : Output format.  Allowed values: json, jsonc,
+                                                     none, table, tsv, yaml, yamlc.  Default: json.
+    --query                                        : JMESPath query string. See http://jmespath.org/
+                                                     for more information and examples.
+    --subscription                                 : Name or ID of subscription. You can configure
+                                                     the default subscription using `az account set
+                                                     -s NAME_OR_ID`.
+    --verbose                                      : Increase logging verbosity. Use --debug for
+                                                     full debug logs.
+
+Examples
+    Create a network interface for a specified subnet on a specified virtual network.
+        az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic
+
+    Create a network interface for a specified subnet on a virtual network which allows IP
+    forwarding subject to a network security group.
+        az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic --ip-
+        forwarding --network-security-group MyNsg
+
+    Create a network interface for a specified subnet on a virtual network with network security
+    group and application security groups.
+        az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic
+        --network-security-group MyNsg --application-security-groups Web App
+

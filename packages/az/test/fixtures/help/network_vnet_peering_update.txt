@@ -1,0 +1,88 @@
+
+Command
+    az network vnet peering update : Update a peering in the specified virtual network.
+
+Arguments
+    --allow-forwarded-traffic : Allows forwarded traffic from the local VNet to the remote VNet.
+                                Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --allow-gateway-transit   : Allows gateway link to be used in the remote VNet.  Allowed values:
+                                0, 1, f, false, n, no, t, true, y, yes.
+    --allow-vnet-access       : Allows access from the local VNet to the remote VNet.  Allowed
+                                values: 0, 1, f, false, n, no, t, true, y, yes.
+    --enable-only-ipv6        : Whether only Ipv6 address space is peered for subnet peering.
+                                Allowed values: 0, 1, f, false, n, no, t, true, y, yes.
+    --local-subnet-names      : List of local subnet names that are subnet peered with remote
+                                virtual network.  Support shorthand-syntax, json-file and yaml-file.
+                                Try "??" to show more.
+    --no-wait                 : Do not wait for the long-running operation to finish.  Allowed
+                                values: 0, 1, f, false, n, no, t, true, y, yes.
+    --peer-complete-vnets     : Whether complete virtual network address space is peered.  Allowed
+                                values: 0, 1, f, false, n, no, t, true, y, yes.
+    --remote-subnet-names     : List of remote subnet names from remote virtual network that are
+                                subnet peered.  Support shorthand-syntax, json-file and yaml-file.
+                                Try "??" to show more.
+    --remote-vnet             : Name or ID of the remote VNet.
+    --sync-remote             : Parameter indicates the intention to sync the peering with the
+                                current address space on the remote vNet after it's updated.
+                                Allowed values: true.
+    --use-remote-gateways     : Allows VNet to use the remote VNet's gateway. Remote VNet gateway
+                                must have --allow-gateway-transit enabled for remote peering. Only 1
+                                peering can have this flag enabled. Cannot be set if the VNet
+                                already has a gateway.  Allowed values: 0, 1, f, false, n, no, t,
+                                true, y, yes.
+
+Generic Update Arguments
+    --add                     : Add an object to a list of objects by specifying a path and key
+                                value pairs.  Example: `--add property.listProperty <key=value,
+                                string or JSON string>`.
+    --force-string            : When using 'set' or 'add', preserve string literals instead of
+                                attempting to convert to JSON.  Allowed values: 0, 1, f, false, n,
+                                no, t, true, y, yes.
+    --remove                  : Remove a property or an element from a list.  Example: `--remove
+                                property.list <indexToRemove>` OR `--remove propertyToRemove`.
+    --set                     : Update an object by specifying a property path and value to set.
+                                Example: `--set property1.property2=<value>`.
+
+Global Policy Arguments
+    --acquire-policy-token    : Acquiring an Azure Policy token automatically for this resource
+                                operation.
+    --change-reference        : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --ids                     : One or more resource IDs (space-delimited). It should be a complete
+                                resource ID containing all information of 'Resource Id' arguments.
+                                You should provide either --ids or other 'Resource Id' arguments.
+    --name -n                 : The name of the VNet peering.
+    --resource-group -g       : Name of resource group. You can configure the default group using
+                                `az configure --defaults group=<name>`.
+    --subscription            : Name or ID of subscription. You can configure the default
+                                subscription using `az account set -s NAME_OR_ID`.
+    --vnet-name               : The virtual network (VNet) name.
+
+Global Arguments
+    --debug                   : Increase logging verbosity to show all debug logs.
+    --help -h                 : Show this help message and exit.
+    --only-show-errors        : Only show errors, suppressing warnings.
+    --output -o               : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                                yamlc.  Default: json.
+    --query                   : JMESPath query string. See http://jmespath.org/ for more information
+                                and examples.
+    --verbose                 : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Change forwarded traffic configuration of a virtual network peering.
+        az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
+        --set allowForwardedTraffic=true
+
+    Change virtual network access of a virtual network peering.
+        az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
+        --set allowVirtualNetworkAccess=true
+
+    Change gateway transit property configuration of a virtual network peering.
+        az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
+        --set allowGatewayTransit=true
+
+    Use remote gateways in virtual network peering.
+        az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
+        --set useRemoteGateways=true
+

@@ -1,0 +1,61 @@
+
+Command
+    az network watcher test-connectivity : Test if a connection can be established between a Virtual
+    Machine and a given endpoint.
+        To check connectivity between two VMs in different regions, use the VM ids instead of the VM
+        names for the source and destination resource arguments. To register for this feature or see
+        additional examples visit https://learn.microsoft.com/en-us/azure/network-watcher/network-
+        watcher-connectivity-cli.
+        WARNING: This command is in preview and under development. Reference and support levels:
+        https://aka.ms/CLI_refstatus
+
+Arguments
+    --source-resource [Required] : Name or ID of the resource from which to originate traffic.
+                                   Currently only Virtual Machines are supported.
+    --no-wait                    : Do not wait for the long-running operation to finish.  Allowed
+                                   values: 0, 1, f, false, n, no, t, true, y, yes.
+    --protocol                   : Protocol to test on.  Allowed values: Http, Https, Icmp, Tcp.
+    --resource-group -g          : Name of the resource group the target resource is in.
+    --source-port                : Port number from which to originate traffic.
+
+Destination Arguments
+    --dest-address               : IP address or URI at which to receive traffic.
+    --dest-port                  : Port number on which to receive traffic.
+    --dest-resource              : Name or ID of the resource to receive traffic. Currently only
+                                   Virtual Machines are supported.
+
+Global Policy Arguments
+    --acquire-policy-token       : Acquiring an Azure Policy token automatically for this resource
+                                   operation.
+    --change-reference           : The related change reference ID for this resource operation.
+
+HTTP Configuration Arguments
+    --headers                    : Space-separated list of headers in `KEY=VALUE` format.  Support
+                                   shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    --method                     : HTTP method to use.  Allowed values: Get.
+    --valid-status-codes         : Space-separated list of HTTP status codes considered valid.
+                                   Support shorthand-syntax, json-file and yaml-file. Try "??" to
+                                   show more.
+
+Global Arguments
+    --debug                      : Increase logging verbosity to show all debug logs.
+    --help -h                    : Show this help message and exit.
+    --only-show-errors           : Only show errors, suppressing warnings.
+    --output -o                  : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                   yaml, yamlc.  Default: json.
+    --query                      : JMESPath query string. See http://jmespath.org/ for more
+                                   information and examples.
+    --subscription               : Name or ID of subscription. You can configure the default
+                                   subscription using `az account set -s NAME_OR_ID`.
+    --verbose                    : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Check connectivity between two virtual machines in the same resource group over port 80.
+        az network watcher test-connectivity -g MyResourceGroup --source-resource MyVmName1 --dest-
+        resource MyVmName2 --dest-port 80
+
+    Check connectivity between two virtual machines in the same subscription in two different
+    resource groups over port 80.
+        az network watcher test-connectivity --source-resource MyVmId1 --dest-resource MyVmId2
+        --dest-port 80
+

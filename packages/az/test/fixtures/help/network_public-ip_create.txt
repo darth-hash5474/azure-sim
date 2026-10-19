@@ -1,0 +1,83 @@
+
+Command
+    az network public-ip create : Create a public IP address.
+
+Arguments
+    --name -n                     [Required] : The name of the public IP address.
+    --resource-group -g           [Required] : Name of resource group. You can configure the default
+                                               group using `az configure --defaults group=<name>`.
+    --allocation-method                      : IP address allocation method.  Allowed values:
+                                               Dynamic, Static.
+    --ddos-custom-policy                     : Name or ID of a DDoS custom policy associated with
+                                               the public IP. Note: A DDoS custom policy can only be
+                                               attached to an instance-level public IP (a public IP
+                                               associated with a NIC/VM) or a Load Balancer frontend
+                                               IP configuration; attaching one to a standalone
+                                               public IP is rejected by the service.
+    --ddos-protection-mode --protection-mode : The DDoS protection mode of the public IP.  Allowed
+                                               values: Disabled, Enabled, VirtualNetworkInherited.
+    --ddos-protection-plan                   : Name or ID of a DDoS protection plan associated with
+                                               the public IP. Can only be set if `--protection-mode`
+                                               is Enabled.
+    --dns-name                               : Globally unique DNS entry.
+    --dns-name-scope                         : The domain name label scope. If a domain name label
+                                               and a domain name label scope are specified, an A DNS
+                                               record is created for the public IP in the Microsoft
+                                               Azure DNS system with a hashed value includes in
+                                               FQDN.  Allowed values: NoReuse, ResourceGroupReuse,
+                                               SubscriptionReuse, TenantReuse.
+    --edge-zone                              : The name of edge zone.
+    --first-party-service-tag-id --fpst-id   : The resource ID of the first party service tag
+                                               associated with the IP tag. Requires exactly one
+                                               value in `--ip-tags`.
+    --idle-timeout                           : Idle timeout in minutes.  Default: 4.
+    --ip-address                             : The IP address associated with the public IP address
+                                               resource.
+    --ip-tags                                : Space-separated list of IP tags in 'TYPE=VAL' format.
+    --location -l                            : Location. Values from: `az account list-locations`.
+                                               You can configure the default location using `az
+                                               configure --defaults location=<location>`.
+    --public-ip-prefix                       : Name or ID of a public IP prefix.
+    --reverse-fqdn                           : Reverse FQDN (fully qualified domain name).
+    --sku                                    : Name of a public IP address SKU.  Allowed values:
+                                               Basic, Standard, StandardV2.  Default: Standard.
+    --tags                                   : Space-separated tags: key[=value] [key[=value] ...].
+                                               Use '' to clear existing tags.
+    --tier                                   : Tier of a public IP address SKU and Global tier is
+                                               only supported for standard SKU public IP addresses.
+                                               Allowed values: Global, Regional.
+    --version                                : IP address type.  Allowed values: IPv4, IPv6.
+    --zone -z                                : Space-separated list of availability zones into which
+                                               to provision the resource.
+
+Global Policy Arguments
+    --acquire-policy-token                   : Acquiring an Azure Policy token automatically for
+                                               this resource operation.
+    --change-reference                       : The related change reference ID for this resource
+                                               operation.
+
+Global Arguments
+    --debug                                  : Increase logging verbosity to show all debug logs.
+    --help -h                                : Show this help message and exit.
+    --only-show-errors                       : Only show errors, suppressing warnings.
+    --output -o                              : Output format.  Allowed values: json, jsonc, none,
+                                               table, tsv, yaml, yamlc.  Default: json.
+    --query                                  : JMESPath query string. See http://jmespath.org/ for
+                                               more information and examples.
+    --subscription                           : Name or ID of subscription. You can configure the
+                                               default subscription using `az account set -s
+                                               NAME_OR_ID`.
+    --verbose                                : Increase logging verbosity. Use --debug for full
+                                               debug logs.
+
+Examples
+    Create a basic public IP resource.
+        az network public-ip create -g MyResourceGroup -n MyIp
+
+    Create a static public IP resource for a DNS name label.
+        az network public-ip create -g MyResourceGroup -n MyIp --dns-name MyLabel --allocation-
+        method Static
+
+    Create a public IP resource in an availability zone in the current resource group region.
+        az network public-ip create -g MyResourceGroup -n MyIp --zone 2
+

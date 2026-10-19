@@ -1,0 +1,55 @@
+
+Command
+    az storage account failover : Failover request can be triggered for a storage account in case of
+    availability issues.
+        The failover occurs from the storage account's primary cluster to secondary cluster for
+        (RA-)GRS/GZRS accounts. The secondary
+        cluster will become primary after failover. For more information, please refer to
+        https://learn.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance.
+
+Arguments
+    --failover-type --type : Specify the failover type. Possible values are: Unplanned, Planned. If
+                             not specified, the default failover type is Unplanned.  Allowed values:
+                             Planned, Unplanned.
+    --no-wait              : Do not wait for the long-running operation to finish.
+    --yes -y               : Do not prompt for confirmation.
+
+Global Policy Arguments
+    --acquire-policy-token : Acquiring an Azure Policy token automatically for this resource
+                             operation.
+    --change-reference     : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --ids                  : One or more resource IDs (space-delimited). It should be a complete
+                             resource ID containing all information of 'Resource Id' arguments. You
+                             should provide either --ids or other 'Resource Id' arguments.
+    --name -n              : The storage account name.
+    --resource-group -g    : Name of resource group. You can configure the default group using `az
+                             configure --defaults group=<name>`.
+    --subscription         : Name or ID of subscription. You can configure the default subscription
+                             using `az account set -s NAME_OR_ID`.
+
+Global Arguments
+    --debug                : Increase logging verbosity to show all debug logs.
+    --help -h              : Show this help message and exit.
+    --only-show-errors     : Only show errors, suppressing warnings.
+    --output -o            : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                             yamlc.  Default: json.
+    --query                : JMESPath query string. See http://jmespath.org/ for more information
+                             and examples.
+    --verbose              : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Unplanned Failover a storage account.
+        az storage account failover -n mystorageaccount -g MyResourceGroup
+
+
+    Planned Failover a storage account.
+        az storage account failover -n mystorageaccount -g MyResourceGroup --failover-type Planned
+
+
+    Failover a storage account without waiting for complete.
+        az storage account failover -n mystorageaccount -g MyResourceGroup --no-wait
+        az storage account show -n mystorageaccount --expand geoReplicationStats
+
+

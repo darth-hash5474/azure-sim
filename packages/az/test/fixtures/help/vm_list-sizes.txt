@@ -1,0 +1,32 @@
+
+Command
+    az vm list-sizes : List available sizes for VMs.
+        WARNING: This command has been deprecated and will be removed in a future release. Use 'az
+        vm list-skus' instead.
+
+Arguments
+    --location -l [Required] : Location. Values from: `az account list-locations`. You can configure
+                               the default location using `az configure --defaults
+                               location=<location>`.
+
+Global Policy Arguments
+    --acquire-policy-token   : Acquiring an Azure Policy token automatically for this resource
+                               operation.
+    --change-reference       : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                  : Increase logging verbosity to show all debug logs.
+    --help -h                : Show this help message and exit.
+    --only-show-errors       : Only show errors, suppressing warnings.
+    --output -o              : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                               yamlc.  Default: json.
+    --query                  : JMESPath query string. See http://jmespath.org/ for more information
+                               and examples.
+    --subscription           : Name or ID of subscription. You can configure the default
+                               subscription using `az account set -s NAME_OR_ID`.
+    --verbose                : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    List the available VM sizes in the West US region.
+        az vm list-sizes -l westus
+

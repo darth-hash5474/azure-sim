@@ -1,0 +1,103 @@
+
+Command
+    az network nsg rule update : Update a network security group rule.
+
+Arguments
+    --access                       : Network traffic is allowed or denied.  Allowed values: Allow,
+                                     Deny.
+    --description                  : Description for this rule. Restricted to 140 chars.
+    --direction                    : Direction of the rule. The direction specifies if rule will be
+                                     evaluated on incoming or outgoing traffic.  Allowed values:
+                                     Inbound, Outbound.
+    --no-wait                      : Do not wait for the long-running operation to finish.  Allowed
+                                     values: 0, 1, f, false, n, no, t, true, y, yes.
+    --priority                     : Priority of the rule. The value can be between 100 and 4096.
+                                     The priority number must be unique for each rule in the
+                                     collection. The lower the priority number, the higher the
+                                     priority of the rule.
+    --protocol                     : Network protocol this rule applies to.  Allowed values: *, Ah,
+                                     Esp, Icmp, Tcp, Udp.
+
+Destination Arguments
+    --destination-address-prefixes : Space-separated list of CIDR prefixes or IP ranges.
+                                     Alternatively, specify ONE of 'VirtualNetwork',
+                                     'AzureLoadBalancer', 'Internet' or '*' to match all IPs.
+                                     Besides, it also supports all available Service Tags like
+                                     'ApiManagement', 'SqlManagement', 'AzureMonitor', etc.  Support
+                                     shorthand-syntax, json-file and yaml-file. Try "??" to show
+                                     more.
+    --destination-asgs             : Space-separated list of application security group names or
+                                     IDs. Limited by backend server, temporarily this argument only
+                                     supports one application security group name or ID.  Support
+                                     shorthand-syntax, json-file and yaml-file. Try "??" to show
+                                     more.
+    --destination-port-ranges      : Space-separated list of ports or port ranges between 0-65535.
+                                     Use '*' to match all ports.  Support shorthand-syntax, json-
+                                     file and yaml-file. Try "??" to show more.
+
+Generic Update Arguments
+    --add                          : Add an object to a list of objects by specifying a path and key
+                                     value pairs.  Example: `--add property.listProperty <key=value,
+                                     string or JSON string>`.
+    --force-string                 : When using 'set' or 'add', preserve string literals instead of
+                                     attempting to convert to JSON.  Allowed values: 0, 1, f, false,
+                                     n, no, t, true, y, yes.
+    --remove                       : Remove a property or an element from a list.  Example:
+                                     `--remove property.list <indexToRemove>` OR `--remove
+                                     propertyToRemove`.
+    --set                          : Update an object by specifying a property path and value to
+                                     set.  Example: `--set property1.property2=<value>`.
+
+Global Policy Arguments
+    --acquire-policy-token         : Acquiring an Azure Policy token automatically for this resource
+                                     operation.
+    --change-reference             : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --ids                          : One or more resource IDs (space-delimited). It should be a
+                                     complete resource ID containing all information of 'Resource
+                                     Id' arguments. You should provide either --ids or other
+                                     'Resource Id' arguments.
+    --name -n                      : Name of the network security group rule.
+    --nsg-name                     : Name of the network security group.
+    --resource-group -g            : Name of resource group. You can configure the default group
+                                     using `az configure --defaults group=<name>`.
+    --subscription                 : Name or ID of subscription. You can configure the default
+                                     subscription using `az account set -s NAME_OR_ID`.
+
+Source Arguments
+    --source-address-prefixes      : Space-separated list of CIDR prefixes or IP ranges.
+                                     Alternatively, specify ONE of 'VirtualNetwork',
+                                     'AzureLoadBalancer', 'Internet' or '*' to match all IPs.
+                                     Besides, it also supports all available Service Tags like
+                                     'ApiManagement', 'SqlManagement', 'AzureMonitor', etc.  Support
+                                     shorthand-syntax, json-file and yaml-file. Try "??" to show
+                                     more.
+    --source-asgs                  : Space-separated list of application security group names or
+                                     IDs. Limited by backend server, temporarily this argument only
+                                     supports one application security group name or ID.  Support
+                                     shorthand-syntax, json-file and yaml-file. Try "??" to show
+                                     more.
+    --source-port-ranges           : Space-separated list of ports or port ranges between 0-65535.
+                                     Use '*' to match all ports.  Support shorthand-syntax, json-
+                                     file and yaml-file. Try "??" to show more.
+
+Global Arguments
+    --debug                        : Increase logging verbosity to show all debug logs.
+    --help -h                      : Show this help message and exit.
+    --only-show-errors             : Only show errors, suppressing warnings.
+    --output -o                    : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                     yaml, yamlc.  Default: json.
+    --query                        : JMESPath query string. See http://jmespath.org/ for more
+                                     information and examples.
+    --verbose                      : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Update an NSG rule with a new wildcard destination address prefix.
+        az network nsg rule update -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --destination-
+        address-prefix '*'
+
+    Update a network security group rule.
+        az network nsg rule update --name MyNsgRule --nsg-name MyNsg --resource-group
+        MyResourceGroup --source-address-prefixes 208.130.28/24
+

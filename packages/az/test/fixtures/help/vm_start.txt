@@ -1,0 +1,44 @@
+
+Command
+    az vm start : Start a stopped VM.
+
+Arguments
+    --no-wait              : Do not wait for the long-running operation to finish.  Allowed values:
+                             0, 1, f, false, n, no, t, true, y, yes.
+
+Global Policy Arguments
+    --acquire-policy-token : Acquiring an Azure Policy token automatically for this resource
+                             operation.
+    --change-reference     : The related change reference ID for this resource operation.
+
+Resource Id Arguments
+    --ids                  : One or more resource IDs (space-delimited). It should be a complete
+                             resource ID containing all information of 'Resource Id' arguments. You
+                             should provide either --ids or other 'Resource Id' arguments.
+    --name --vm-name -n    : The name of the Virtual Machine. You can configure the default using
+                             `az configure --defaults vm=<name>`.
+    --resource-group -g    : Name of resource group. You can configure the default group using `az
+                             configure --defaults group=<name>`.
+    --subscription         : Name or ID of subscription. You can configure the default subscription
+                             using `az account set -s NAME_OR_ID`.
+
+Global Arguments
+    --debug                : Increase logging verbosity to show all debug logs.
+    --help -h              : Show this help message and exit.
+    --only-show-errors     : Only show errors, suppressing warnings.
+    --output -o            : Output format.  Allowed values: json, jsonc, none, table, tsv, yaml,
+                             yamlc.  Default: json.
+    --query                : JMESPath query string. See http://jmespath.org/ for more information
+                             and examples.
+    --verbose              : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Start a stopped VM.
+        az vm start -g MyResourceGroup -n MyVm
+
+    Start all VMs in a resource group.
+        az vm start --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+
+    Start a stopped VM.
+        az vm start --name MyVm --no-wait --resource-group MyResourceGroup
+

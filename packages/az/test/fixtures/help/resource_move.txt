@@ -1,0 +1,33 @@
+
+Command
+    az resource move : Move resources from one resource group to another (can be under different
+    subscription).
+
+Arguments
+    --destination-group [Required] : The destination resource group name.
+    --ids               [Required] : The space-separated resource ids to be moved.
+    --destination-subscription-id  : The destination subscription identifier.
+
+Global Policy Arguments
+    --acquire-policy-token         : Acquiring an Azure Policy token automatically for this resource
+                                     operation.
+    --change-reference             : The related change reference ID for this resource operation.
+
+Global Arguments
+    --debug                        : Increase logging verbosity to show all debug logs.
+    --help -h                      : Show this help message and exit.
+    --only-show-errors             : Only show errors, suppressing warnings.
+    --output -o                    : Output format.  Allowed values: json, jsonc, none, table, tsv,
+                                     yaml, yamlc.  Default: json.
+    --query                        : JMESPath query string. See http://jmespath.org/ for more
+                                     information and examples.
+    --subscription                 : Name or ID of subscription. You can configure the default
+                                     subscription using `az account set -s NAME_OR_ID`.
+    --verbose                      : Increase logging verbosity. Use --debug for full debug logs.
+
+Examples
+    Move multiple resources to the destination resource group under the destination subscription
+        az resource move --destination-group ResourceGroup --destination-subscription-id
+        SubscriptionId --ids "ResourceId1" "ResourceId2" "ResourceId3"
+
+
