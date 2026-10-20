@@ -19,5 +19,8 @@
   },
   "engines": {
     "node": ">=22.12"
+  },
+  "dependencies": {
+    "packages": "^0.0.8"
   }
 }
